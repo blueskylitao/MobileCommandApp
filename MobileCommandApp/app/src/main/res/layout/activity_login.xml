@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_img"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="41dp"
+        android:text="@string/txt_login"
+        android:textColor="#ff111111"
+        android:textSize="30sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/login_name_txt"
+        android:textColor="#ff999999"
+        android:textSize="12sp" />
+
+    <EditText
+        android:id="@+id/et_loginname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="3dp"
+        android:background="@null"
+        android:hint="@string/toast_phone_login"
+        android:textColor="#000000"
+        android:textSize="17sp" />
+
+    <View
+        android:id="@+id/ll_line"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="21dp"
+        android:background="#eeeeee" />
+
+    <EditText
+        android:id="@+id/et_loginpsw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="3dp"
+        android:background="@null"
+        android:hint="@string/toast_phone_psw"
+        android:inputType="textPassword"
+        android:textColor="#ff111111"
+        android:textSize="17sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="35dp"
+        android:background="#eeeeee" />
+
+    <TextView
+        android:id="@+id/tv_login_button"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/bt_confirm_bg"
+        android:gravity="center"
+        android:text="@string/txt_login"
+        android:textColor="#ffffffff"
+        android:textSize="16sp" />
+</LinearLayout>

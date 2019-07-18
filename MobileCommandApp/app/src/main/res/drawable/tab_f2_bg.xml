@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 默认时的背景图片 -->
+
+    <item android:drawable="@mipmap/xinxi_ic" android:state_checked="false" />
+    <!-- 选中时的图片背景 -->
+    <item android:drawable="@mipmap/xinxi_ic_pre" android:state_selected="true" />
+    <item android:drawable="@mipmap/xinxi_ic_pre" android:state_pressed="true" />
+    <item android:drawable="@mipmap/xinxi_ic_pre" android:state_checked="true" />
+
+</selector>

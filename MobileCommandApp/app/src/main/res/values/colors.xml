@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0E5DA1</color>
+    <color name="colorPrimaryDark">#0E5DA1</color>
+    <color name="colorAccent">#0E5DA1</color>
+    <color name="themecolor">#ffffff</color>
+    <color name="themecolortwo">#0E5DA1</color>
+    <color name="darkthree">#333333</color>
+    <color name="darkone">#111111</color>
+    <color name="window_gray">#f4f4f4</color>
+    <color name="line_grey">#e6e6e6</color>
+    <color name="my_btn_nomal">#FFFFFF</color>
+    <color name="my_btn_pressed">#F5F5F5</color>
+    <color name="titleBottomColor">@color/themecolor</color>
+    <color name="ccMenuIconColor">@color/darkone</color>
+</resources>

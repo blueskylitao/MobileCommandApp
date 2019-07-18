@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">移动指挥舱</string>
+    <string name="tip_double_click_exit">再按一次退出</string>
+    <string name="dialog_loading">加载中...</string>
+    <string name="toast_net_failed">网络连接异常</string>
+    <string name="dialog_tips_exit">确定离开?</string>
+    <string name="dialog_tips_login_out">退出账号?</string>
+    <string name="dialog_tips_exit_cancel">取消</string>
+    <string name="dialog_tips_exit_confirm">确定</string>
+    <string name="toast_outdate_login">登录信息已过期，请重新登录</string>
+    <string name="toast_parse_error">数据解析异常</string>
+    <string name="toast_phone_login">请输入用户名</string>
+    <string name="toast_phone_psw">请输入密码</string>
+    <string name="txt_login">登 录</string>
+    <string name="toast_not_exist_phone">账号不存在</string>
+    <string name="toast_not_true_psw">密码不正确</string>
+    <string name="login_name_txt">用户名</string>
+    <string name="company_name_txt">公司名称</string>
+    <string name="contact_person_txt">联系人</string>
+    <string name="contact_phone_txt">联系人电话</string>
+    <string name="login_out_txt">退出登录</string>
+    <string name="user_info_txt">用户信息</string>
+    <string name="pop_scan_txt">扫一扫</string>
+    <string name="creat_group_chat_txt">发起群聊</string>
+
+    <string name="main_tab1_txt">主页</string>
+    <string name="main_tab2_txt">消息</string>
+    <string name="main_tab3_txt">联系人</string>
+    <string name="main_tab4_txt">我的</string>
+</resources>

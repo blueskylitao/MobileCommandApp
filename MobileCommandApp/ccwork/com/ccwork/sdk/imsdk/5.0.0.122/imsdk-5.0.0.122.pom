@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ccwork.sdk</groupId>
+  <artifactId>imsdk</artifactId>
+  <version>5.0.0.122</version>
+  <packaging>aar</packaging>
+  <dependencies>
+    <dependency>
+      <groupId>org.greenrobot</groupId>
+      <artifactId>greendao</artifactId>
+      <version>3.2.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <artifactId>webbase</artifactId>
+      <scope>compile</scope>
+      <version>5.0.0.122</version>
+      <groupId>com.ccwork.sdk</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>dbbase</artifactId>
+      <scope>compile</scope>
+      <version>5.0.0.122</version>
+      <groupId>com.ccwork.sdk</groupId>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.kotlin</groupId>
+      <artifactId>kotlin-stdlib-jdk7</artifactId>
+      <version>1.3.11</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

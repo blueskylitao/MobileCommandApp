@@ -1,0 +1,1 @@
+com/kook/view/util/ViewBatchUtil.class

@@ -1,0 +1,106 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/head_layout"
+        layout="@layout/head_activity"
+        />
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="49dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/themecolor">
+
+        <RadioGroup
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0.5dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/button1"
+                style="@style/main_radiobtn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@color/themecolor"
+                android:checked="true"
+                android:drawableTop="@drawable/tab_f1_bg"
+                android:drawablePadding="-2dp"
+                android:text="@string/main_tab1_txt"
+                android:textColor="@color/darkone"
+                android:textSize="10sp" />
+
+            <RadioButton
+                android:id="@+id/button2"
+                style="@style/main_radiobtn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@color/themecolor"
+                android:drawableTop="@drawable/tab_f2_bg"
+                android:drawablePadding="-2dp"
+                android:text="@string/main_tab2_txt"
+                android:textColor="@color/darkone"
+                android:textSize="10sp" />
+
+            <RadioButton
+                android:id="@+id/button3"
+                style="@style/main_radiobtn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@color/themecolor"
+                android:drawableTop="@drawable/tab_f3_bg"
+                android:drawablePadding="-2dp"
+                android:text="@string/main_tab3_txt"
+                android:textColor="@color/darkone"
+                android:textSize="10sp" />
+
+            <RadioButton
+                android:id="@+id/button4"
+                style="@style/main_radiobtn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@color/themecolor"
+                android:drawableTop="@drawable/tab_f4_bg"
+                android:drawablePadding="-2dp"
+                android:text="@string/main_tab4_txt"
+                android:textColor="@color/darkone"
+                android:textSize="10sp" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/ll_unread"
+            android:layout_width="38dp"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ezy.ui.view.BadgeButton
+                android:id="@+id/unread_dot"
+                style="@style/BadgeButton.Normal"
+                android:layout_marginTop="3dp"
+                app:btnBadgeColor="#f43528"
+                app:btnBadgeVisible="false"
+                app:btnBadgeText="10"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/ll_line3"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_above="@id/bottom"
+        android:background="#333333" />
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/head_layout"
+        android:layout_height="match_parent"
+        android:layout_above="@id/ll_line3"
+        android:orientation="vertical" />
+
+</RelativeLayout>
