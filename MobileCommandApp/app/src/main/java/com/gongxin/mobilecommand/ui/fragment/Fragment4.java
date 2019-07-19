@@ -2,6 +2,7 @@ package com.gongxin.mobilecommand.ui.fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,13 @@ import android.widget.TextView;
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.base.BaseFragment;
 import com.gongxin.mobilecommand.domain.LoginUser;
+import com.gongxin.mobilecommand.utils.DataCleanManager;
 import com.gongxin.mobilecommand.utils.SPUtil;
 import com.gongxin.mobilecommand.utils.SharePreferenceUtil;
+import com.gongxin.mobilecommand.utils.ToastUtil;
 import com.gyf.immersionbar.ImmersionBar;
+import com.kook.KKCallback;
+import com.kook.KKManager;
 
 import java.util.ArrayList;
 
@@ -23,7 +28,7 @@ import butterknife.BindView;
 /**
  * author:geekLi
  */
-public class Fragment4 extends BaseFragment {
+public class Fragment4 extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.login_btn_back)
     ImageView mLoginBtnBack;
     @BindView(R.id.tv_title)
@@ -63,29 +68,19 @@ public class Fragment4 extends BaseFragment {
     protected void initListener() {
         mLoginBtnBack.setVisibility(View.GONE);
         mTvTitle.setText(R.string.main_tab4_txt);
-        mBtLoginout.setOnClickListener(view -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage(getResources().getString(R.string.dialog_tips_login_out));
-            builder.setCancelable(false);
-            builder.setPositiveButton(getResources().getString(R.string.dialog_tips_exit_confirm)
-                    , (DialogInterface dialog, int which) -> {
-                        SPUtil.put(context, "uid", "0");
-                        ArrayList<LoginUser> loginList = new ArrayList<>();
-                        LoginUser loginUser = new LoginUser();
-                        loginUser.setId("0");
-                        loginList.add(loginUser);
-                        SharePreferenceUtil.getUtil(context).setDataList("jsonList", loginList);
-                        SPUtil.put(context, "usertoken", "null");
-                        getActivity().finish();
-                        toLoginInfo(1);
-                    }).setNegativeButton(getResources().getString(R.string.dialog_tips_exit_cancel),
-                    (dialog, which) -> dialog.dismiss());
-            builder.create().show();
-        });
+        mBtLoginout.setOnClickListener(this);
+        mRlClearCache.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
+        String cacheSize = "0M";
+        try {
+            cacheSize = DataCleanManager.getTotalCacheSize(context);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mTvCachesize.setText(cacheSize);
     }
 
     @Override
@@ -95,5 +90,48 @@ public class Fragment4 extends BaseFragment {
                 .statusBarColor(R.color.white)
                 .statusBarDarkFont(true, 0.2f)
                 .init();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.bt_loginout:
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage(getResources().getString(R.string.dialog_tips_login_out));
+                builder.setCancelable(false);
+                builder.setPositiveButton(getResources().getString(R.string.dialog_tips_exit_confirm)
+                        , (DialogInterface dialog, int which) -> {
+                            SPUtil.put(context, "uid", "0");
+                            ArrayList<LoginUser> loginList = new ArrayList<>();
+                            LoginUser loginUser = new LoginUser();
+                            loginUser.setId("0");
+                            loginList.add(loginUser);
+                            SharePreferenceUtil.getUtil(context).setDataList("jsonList", loginList);
+                            SPUtil.put(context, "usertoken", "null");
+                            getActivity().finish();
+                            KKManager.getInstance().logout(new KKCallback() {
+                                @Override
+                                public void onError(int i) {
+                                    Log.e("LOGINOUT", "退出失败");
+                                }
+
+                                @Override
+                                public void onSucceed() {
+                                    Log.e("LOGINOUT", "退出成功");
+                                }
+                            });
+                            toLoginInfo(1);
+                        }).setNegativeButton(getResources().getString(R.string.dialog_tips_exit_cancel),
+                        (dialog, which) -> dialog.dismiss());
+                builder.create().show();
+                break;
+            case R.id.rl_clear_cache:
+                DataCleanManager.clearAllCache(context);
+                mTvCachesize.setText("0M");
+                ToastUtil.showToast(context, "缓存清理完成");
+                break;
+            default:
+                break;
+        }
     }
 }

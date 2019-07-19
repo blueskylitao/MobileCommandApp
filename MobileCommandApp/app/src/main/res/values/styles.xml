@@ -24,7 +24,7 @@
 
     <!--1、设置背景图Theme-->
     <style name="Theme.AppStartLoad" parent="android:Theme.NoTitleBar.Fullscreen">
-        <item name="android:windowBackground">@mipmap/qidong</item>
+        <item name="android:windowBackground">@color/guide_color</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>

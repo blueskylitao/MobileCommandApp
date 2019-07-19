@@ -13,4 +13,6 @@
     <color name="my_btn_pressed">#F5F5F5</color>
     <color name="titleBottomColor">@color/themecolor</color>
     <color name="ccMenuIconColor">@color/darkone</color>
+    <color name="guide_color">#0B1C35</color>
+
 </resources>

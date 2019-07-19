@@ -191,6 +191,7 @@ public class Fragment1 extends BaseFragment {
         if (webview_detail != null) {
             webview_detail.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             webview_detail.clearHistory();
+            webview_detail.clearCache(true);
             ((ViewGroup) webview_detail.getParent()).removeView(webview_detail);
             webview_detail.setWebChromeClient(null);
             webview_detail.setWebViewClient(null);

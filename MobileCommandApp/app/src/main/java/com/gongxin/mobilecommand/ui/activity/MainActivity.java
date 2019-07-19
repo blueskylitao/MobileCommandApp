@@ -29,32 +29,20 @@ import com.gongxin.mobilecommand.ui.dialog.MyDialogHint;
 import com.gongxin.mobilecommand.ui.fragment.Fragment1;
 import com.gongxin.mobilecommand.ui.fragment.Fragment4;
 import com.gongxin.mobilecommand.utils.DensityUtil;
-import com.gongxin.mobilecommand.utils.ForwardCommand;
 import com.gongxin.mobilecommand.utils.ToastUtil;
 import com.gongxin.mobilecommand.utils.Utils;
 import com.kook.KKManager;
-import com.kook.im.model.forword.ForwardItem;
-import com.kook.im.model.forword.ForwardUtils;
-import com.kook.im.ui.chat.ChatActivity;
-import com.kook.im.ui.choose.ChooseActivity;
 import com.kook.im.ui.home.AbsMenuItem;
 import com.kook.im.ui.home.ContactFragment;
 import com.kook.im.ui.home.ConversationFragment;
 import com.kook.im.ui.home.MainMenuHelper;
-import com.kook.im.util.choose.ChooseType;
-import com.kook.im.util.choose.datasource.ChooseDataSrcProvider;
-import com.kook.im.util.choose.entity.ChooseResultNode;
-import com.kook.sdk.api.EConvType;
 import com.kook.sdk.wrapper.KKClient;
 import com.kook.sdk.wrapper.StatusCode;
 import com.kook.sdk.wrapper.auth.AuthService;
 import com.kook.sdk.wrapper.msg.MsgService;
-import com.kook.sdk.wrapper.msg.model.KKIMMessageFactory;
 import com.lzy.okgo.model.Response;
 import com.orhanobut.logger.Logger;
 
-import java.lang.ref.SoftReference;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -417,15 +405,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             LinearLayout ll_selecttwo = (LinearLayout) view
                     .findViewById(R.id.ll_selecttwo);
             ll_selectone.setOnClickListener(view1 -> {
-               /* List<AbsMenuItem> defaultKKMenuItem = MainMenuHelper.getDefaultKKMenuItem(MainActivity.this);
-                defaultKKMenuItem.get(1).onClick();*/
-                ChatActivity.launch(context, Long.parseLong("1900024812292569"), EConvType.ECONV_TYPE_GROUP, "");
+                List<AbsMenuItem> defaultKKMenuItem = MainMenuHelper.getDefaultKKMenuItem(MainActivity.this);
+                defaultKKMenuItem.get(1).onClick();
+                // ChatActivity.launch(context, Long.parseLong("1900024812292569"), EConvType.ECONV_TYPE_GROUP, "");
                 popupWindow.dismiss();
             });
             ll_selecttwo.setOnClickListener(view12 -> {
-               /* List<AbsMenuItem> defaultKKMenuItem = MainMenuHelper.getDefaultKKMenuItem(MainActivity.this);
-                defaultKKMenuItem.get(4).onClick();*/
-                ForwardItem forwardItem = ForwardUtils.buidForward(KKIMMessageFactory.createLinkCardMsg(EConvType.ECONV_TYPE_SINGLE, 1, "http://baid.com", "title", "content", "", true));
+                List<AbsMenuItem> defaultKKMenuItem = MainMenuHelper.getDefaultKKMenuItem(MainActivity.this);
+                defaultKKMenuItem.get(4).onClick();
+               /* ForwardItem forwardItem = ForwardUtils.buidForward(KKIMMessageFactory.createLinkCardMsg(EConvType.ECONV_TYPE_SINGLE, 1, "http://baid.com", "title", "content", "", true));
                 ForwardCommand forwardCommand = new ForwardCommand() {
                     @Override
                     public void onChooseResult(SoftReference<com.kook.im.ui.BaseActivity> context, ArrayList<ChooseResultNode> arrayList) {
@@ -443,7 +431,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     }
                 };
                 forwardCommand.setForwardItem(forwardItem);
-                ChooseActivity.launch(context, forwardCommand, ChooseDataSrcProvider.getForwardOption(context.getString(R.string.forword_choose_out_msg)));
+                ChooseActivity.launch(context, forwardCommand, ChooseDataSrcProvider.getForwardOption(context.getString(R.string.forword_choose_out_msg)));*/
                 // ForwardUtils.startForword(this, KKIMMessageFactory.createLinkCardMsg(EConvType.ECONV_TYPE_GROUP,111,"http://www.baidu.com","sss","dsafsdafd","",true));
                 popupWindow.dismiss();
             });

@@ -18,9 +18,9 @@
         <ImageView
             android:id="@+id/iv_guid"
             style="@style/wightm_heightm"
-            android:scaleType="fitXY"
-            android:src="@mipmap/ic_launcher"
-            android:visibility="gone" />
+            android:background="#0B1C35"
+            android:src="@mipmap/qidong"
+            android:visibility="visible" />
     </RelativeLayout>
 
 </FrameLayout>

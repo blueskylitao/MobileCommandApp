@@ -9,9 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -19,8 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
 
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.base.BaseActivity;
@@ -300,6 +296,9 @@ public class PublicWebviewActivity extends BaseActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+       /* if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.getUrl() != null && mWebView.getUrl().contains("backType=finishAcivity")) {
+            finish();
+        } else */
         if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
             mWebView.goBack();
             return true;
@@ -316,6 +315,7 @@ public class PublicWebviewActivity extends BaseActivity {
         if (mWebView != null) {
             mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             mWebView.clearHistory();
+            mWebView.clearCache(true);
             ((ViewGroup) mWebView.getParent()).removeView(mWebView);
             mWebView.setWebChromeClient(null);
             mWebView.setWebViewClient(null);
