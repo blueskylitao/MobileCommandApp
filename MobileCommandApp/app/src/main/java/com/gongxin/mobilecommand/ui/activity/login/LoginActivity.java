@@ -172,6 +172,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void requestHomeLink() {
         try {
             HttpParams params = new HttpParams();
+            //1：手机 2：pad
+            params.put("devicetype", "1");
             httpRequestByGet("command/linked/home", params, 3);
         } catch (Exception e) {
             e.printStackTrace();
