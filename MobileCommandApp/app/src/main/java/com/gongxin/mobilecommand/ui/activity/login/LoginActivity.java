@@ -14,6 +14,7 @@ import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.base.BaseActivity;
 import com.gongxin.mobilecommand.domain.LoginUser;
 import com.gongxin.mobilecommand.ui.activity.MainActivity;
+import com.gongxin.mobilecommand.utils.HttpUtil;
 import com.gongxin.mobilecommand.utils.SPUtil;
 import com.gongxin.mobilecommand.utils.SharePreferenceUtil;
 import com.gongxin.mobilecommand.utils.ToastUtil;
@@ -150,6 +151,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onHttpRequestErr(Response<String> response, int id) {
         super.onHttpRequestErr(response, id);
+        ToastUtil.showToast(context, "ip地址" + HttpUtil.BASEURL);
         if (id == 1) {
             mBtLogin.setClickable(true);
         }

@@ -19,6 +19,7 @@ import com.gongxin.mobilecommand.domain.LoginUser;
 import com.gongxin.mobilecommand.ui.activity.GestureLockLoginActivity;
 import com.gongxin.mobilecommand.ui.activity.SelectLoginTypeActivity;
 import com.gongxin.mobilecommand.ui.activity.SetGestureLockActivity;
+import com.gongxin.mobilecommand.ui.activity.SetIpAddressActivity;
 import com.gongxin.mobilecommand.utils.DataCleanManager;
 import com.gongxin.mobilecommand.utils.SPUtil;
 import com.gongxin.mobilecommand.utils.SharePreferenceUtil;
@@ -65,6 +66,8 @@ public class Fragment4 extends BaseFragment implements View.OnClickListener {
     TextView mTvCachesize;
     @BindView(R.id.rl_clear_cache)
     RelativeLayout mRlClearCache;
+    @BindView(R.id.rl_set_ipaddress)
+    RelativeLayout mRlSetIpaddress;
     @BindView(R.id.bt_loginout)
     TextView mBtLoginout;
     private final int SETGESTURELOCK = 100;
@@ -84,6 +87,7 @@ public class Fragment4 extends BaseFragment implements View.OnClickListener {
         mRlLoginType.setOnClickListener(this);
         mRlSetFace.setOnClickListener(this);
         mRlSetGesture.setOnClickListener(this);
+        mRlSetIpaddress.setOnClickListener(this);
     }
 
     @Override
@@ -166,6 +170,10 @@ public class Fragment4 extends BaseFragment implements View.OnClickListener {
                     Intent intent1 = new Intent(context, SetGestureLockActivity.class);
                     startActivityForResult(intent1, SETGESTURELOCK);
                 }
+                break;
+            case R.id.rl_set_ipaddress:
+                Intent intent2 = new Intent(context, SetIpAddressActivity.class);
+                startActivity(intent2);
                 break;
             default:
                 break;

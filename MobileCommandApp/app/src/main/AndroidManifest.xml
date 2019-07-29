@@ -83,6 +83,9 @@
         <activity
             android:name=".ui.activity.GestureLockLoginActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name=".ui.activity.SetIpAddressActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize|orientation" />
 
     </application>
 

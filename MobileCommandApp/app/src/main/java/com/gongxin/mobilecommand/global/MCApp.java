@@ -9,6 +9,9 @@ import android.widget.Toast;
 import androidx.multidex.MultiDexApplication;
 
 import com.gongxin.mobilecommand.R;
+import com.gongxin.mobilecommand.utils.HttpUtil;
+import com.gongxin.mobilecommand.utils.SPUtil;
+import com.gongxin.mobilecommand.utils.Utils;
 import com.kook.common.INotificationView;
 import com.kook.im.UIManager;
 import com.kook.im.manager.IMPluginManager;
@@ -43,6 +46,11 @@ public class MCApp extends MultiDexApplication {
         initOkHttp();
         //  initX5();
         initChatModel();
+
+        String ipaddress = (String) SPUtil.get(getContext(), "ipaddress", "");
+        if (!Utils.isNullOrEmpty(ipaddress)) {
+            HttpUtil.BASEURL = ipaddress;
+        }
     }
 
     private void initChatModel() {

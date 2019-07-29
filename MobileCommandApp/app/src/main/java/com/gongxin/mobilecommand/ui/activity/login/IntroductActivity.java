@@ -14,6 +14,7 @@ import com.gongxin.mobilecommand.domain.LoginUser;
 import com.gongxin.mobilecommand.global.Constants;
 import com.gongxin.mobilecommand.ui.activity.GestureLockLoginActivity;
 import com.gongxin.mobilecommand.ui.activity.MainActivity;
+import com.gongxin.mobilecommand.utils.HttpUtil;
 import com.gongxin.mobilecommand.utils.SPUtil;
 import com.gongxin.mobilecommand.utils.SharePreferenceUtil;
 import com.gongxin.mobilecommand.utils.ToastUtil;
@@ -156,6 +157,7 @@ public class IntroductActivity extends BaseActivity {
     protected void onHttpRequestErr(Response<String> response, int id) {
         super.onHttpRequestErr(response, id);
         ToastUtil.shortToast(context, getString(R.string.toast_net_failed));
+        ToastUtil.showToast(context, "ip地址" + HttpUtil.BASEURL);
         jumpToHome();
     }
 
@@ -169,7 +171,7 @@ public class IntroductActivity extends BaseActivity {
                     List<LoginUser> jsonList = SharePreferenceUtil.getUtil(context).getJsonDataList("jsonList");
                     UserUtil.setLoginUser(jsonList.get(0));
                     ToastUtil.showToast(context, "连接异常，请检查网络设置");
-                    //jumpToHome();
+                    jumpToHome();
                 } else {
                     toLoginInfo(1);
                     finish();
