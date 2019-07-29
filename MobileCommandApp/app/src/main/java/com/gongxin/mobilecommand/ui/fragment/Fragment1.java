@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -67,6 +68,7 @@ public class Fragment1 extends BaseFragment {
         token = (String) SPUtil.get(context, "usertoken", "0");
         if (!TextUtils.isEmpty(dataUrl)) {
             webview_detail.loadUrl(dataUrl);
+            // webview_detail.loadUrl("http://www.oschina.net/question/54100_34836");
         } else {
             ToastUtil.showToast(context, "空的URL");
         }
@@ -86,7 +88,6 @@ public class Fragment1 extends BaseFragment {
         // settings.setLoadWithOverviewMode(true);
         // 保存表单数据
         settings.setSaveFormData(true);
-        settings.setDisplayZoomControls(false);
         // 启动应用缓存
         settings.setAppCacheEnabled(true);
         // 设置缓存模式
@@ -103,14 +104,34 @@ public class Fragment1 extends BaseFragment {
 
         //支持缩放
         settings.setUseWideViewPort(true);//设定支持viewport
-        settings.setLoadWithOverviewMode(false);//false 可能对屏幕适配有用
+        settings.setLoadWithOverviewMode(true);//false 可能对屏幕适配有用
         settings.setBuiltInZoomControls(true);
         settings.setSupportZoom(true);//设定支持缩放
-        //settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setDomStorageEnabled(true);//主要是这句 使用localStorage则必须打开
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setLoadsImagesAutomatically(true);
+        settings.setDisplayZoomControls(false); //隐藏原生的缩放控件`
         //  webview_detail.setScaleX(40);
+
+       /* DisplayMetrics metrics = new DisplayMetrics();
+        mActivity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int mDensity = metrics.densityDpi;
+        Log.d("maomao", "densityDpi = " + mDensity);
+        if (mDensity == 240) {
+            settings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+        } else if (mDensity == 160) {
+            settings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
+        } else if(mDensity == 120) {
+            settings.setDefaultZoom(WebSettings.ZoomDensity.CLOSE);
+        }else if(mDensity == DisplayMetrics.DENSITY_XHIGH){
+            settings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+        }else if (mDensity == DisplayMetrics.DENSITY_TV){
+            settings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+        }else{
+            settings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
+        }
+
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);*/
 
 
         webview_detail.setWebChromeClient(new WebChromeClient() {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">移动指挥舱</string>
+    <string name="app_name">移动指挥舱PAD</string>
     <string name="tip_double_click_exit">再按一次退出</string>
     <string name="dialog_loading">加载中...</string>
     <string name="toast_net_failed">网络连接异常</string>
@@ -27,4 +27,8 @@
     <string name="main_tab2_txt">消息</string>
     <string name="main_tab3_txt">联系人</string>
     <string name="main_tab4_txt">我的</string>
+    <string name="radiobutton1">手势</string>
+    <string name="radiobutton2">指纹</string>
+    <string name="radiobutton3">扫脸</string>
+
 </resources>

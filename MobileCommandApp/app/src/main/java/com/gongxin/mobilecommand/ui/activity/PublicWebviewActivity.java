@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.http.SslError;
 import android.os.Build;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -250,7 +251,10 @@ public class PublicWebviewActivity extends BaseActivity {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-
+                Log.e("transContent",trasContent);
+                Log.e("trasLinkUrl",trasLinkUrl);
+                Log.e("trasTitle",trasTitle);
+                Log.e("trasIconUrl",trasIconUrl);
                 //  ChatActivity.launch(context, Long.parseLong("1900024812292569"), EConvType.ECONV_TYPE_GROUP, "");
                 ForwardItem forwardItem = ForwardUtils.buidForward(KKIMMessageFactory.createLinkCardMsg(EConvType.ECONV_TYPE_SINGLE, 1, trasLinkUrl, trasTitle, trasContent, trasIconUrl, true));
                 ForwardCommand forwardCommand = new ForwardCommand() {

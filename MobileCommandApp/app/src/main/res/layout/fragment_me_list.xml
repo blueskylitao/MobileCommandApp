@@ -35,7 +35,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="15dp"
                         android:layout_marginBottom="15dp">
 
                         <ImageView
@@ -204,7 +204,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="15dp"
                         android:layout_toRightOf="@id/iv3"
-                        android:text="设置密码"
+                        android:text="修改密码"
                         android:textColor="#111"
                         android:textSize="15sp" />
 
@@ -268,7 +268,8 @@
                     android:background="@drawable/my_click_bg"
                     android:clickable="true"
                     android:paddingLeft="30dp"
-                    android:paddingRight="30dp">
+                    android:paddingRight="30dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/iv5"
@@ -285,6 +286,47 @@
                         android:layout_marginLeft="15dp"
                         android:layout_toRightOf="@id/iv5"
                         android:text="设置指纹"
+                        android:textColor="#111"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/me_arrow_ic" />
+                </RelativeLayout>
+
+                <View
+                    style="@style/sty_divider"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_set_face"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/my_click_bg"
+                    android:clickable="true"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <ImageView
+                        android:id="@+id/iv7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="12dp"
+                        android:paddingBottom="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/iv7"
+                        android:text="设置扫脸"
                         android:textColor="#111"
                         android:textSize="15sp" />
 

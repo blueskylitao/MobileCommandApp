@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/head_activity" />
+
+    <RadioGroup
+        android:id="@+id/RG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <RadioButton
+            android:id="@+id/RB1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/my_click_bg"
+            android:button="@null"
+            android:drawableEnd="@drawable/selector_radio_button_state"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/radiobutton1"
+            android:textColor="#111"
+            android:textSize="15sp" />
+
+        <View
+            style="@style/sty_divider"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" />
+
+        <RadioButton
+            android:id="@+id/RB2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/my_click_bg"
+            android:button="@null"
+            android:drawableEnd="@drawable/selector_radio_button_state"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/radiobutton2"
+            android:textColor="#111"
+            android:textSize="15sp" />
+
+        <View
+            android:id="@+id/view_line"
+            style="@style/sty_divider"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" />
+
+        <RadioButton
+            android:id="@+id/RB3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/my_click_bg"
+            android:button="@null"
+            android:drawableEnd="@drawable/selector_radio_button_state"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/radiobutton3"
+            android:textColor="#111"
+            android:textSize="15sp" />
+
+        <View
+            style="@style/sty_divider"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" />
+    </RadioGroup>
+
+
+</LinearLayout>

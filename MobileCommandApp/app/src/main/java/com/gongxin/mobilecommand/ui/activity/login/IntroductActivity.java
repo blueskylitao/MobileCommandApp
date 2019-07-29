@@ -11,6 +11,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.base.BaseActivity;
 import com.gongxin.mobilecommand.domain.LoginUser;
+import com.gongxin.mobilecommand.global.Constants;
+import com.gongxin.mobilecommand.ui.activity.GestureLockLoginActivity;
 import com.gongxin.mobilecommand.ui.activity.MainActivity;
 import com.gongxin.mobilecommand.utils.SPUtil;
 import com.gongxin.mobilecommand.utils.SharePreferenceUtil;
@@ -200,11 +202,21 @@ public class IntroductActivity extends BaseActivity {
     }
 
     private void jumpToHome() {
-        Intent i = new Intent(this, MainActivity.class);
-        i.putExtra("dataUrl", data);
-        startActivity(i);
-        overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
-        finish();
+        String loginType = (String) SPUtil.get(this, Constants.LOGINTYPE, "0");
+        if ("0".equals(loginType)) {
+            Intent i = new Intent(this, MainActivity.class);
+            i.putExtra("dataUrl", data);
+            startActivity(i);
+            overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
+            finish();
+        } else {
+            Intent intent = new Intent(context, GestureLockLoginActivity.class);
+            intent.putExtra("type", "login");
+            intent.putExtra(Constants.LOGINTYPE, loginType);
+            intent.putExtra("dataUrl", data);
+            startActivity(intent);
+            finish();
+        }
     }
 
 

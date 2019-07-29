@@ -16,6 +16,9 @@
     <!--tencent x5添加-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- 指纹权限 -->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+
     <!-- 硬件加速对X5视频播放非常重要，建议开启 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
 
@@ -43,6 +46,7 @@
 
         <activity
             android:name=".ui.activity.login.IntroductActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize|orientation"
             android:theme="@style/Theme.AppStartLoad">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,6 +58,7 @@
 
         <activity
             android:name=".ui.activity.MainActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize|orientation"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
@@ -61,11 +66,24 @@
               android:name=".ui.activity.login.LoginActivity"
               android:launchMode="singleTask"
               android:windowSoftInputMode="adjustResize|stateHidden" />-->
-        <activity android:name=".ui.activity.PublicWebviewActivity" />
+        <activity
+            android:name=".ui.activity.PublicWebviewActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize|orientation" />
         <activity
             android:name=".ui.activity.login.LoginActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize|orientation"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ui.activity.SelectLoginTypeActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name=".ui.activity.SetGestureLockActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name=".ui.activity.GestureLockLoginActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize|orientation" />
+
     </application>
 
 </manifest>

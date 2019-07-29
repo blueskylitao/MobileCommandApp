@@ -1,5 +1,6 @@
 package com.gongxin.mobilecommand.ui.activity;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -28,6 +29,7 @@ import com.gongxin.mobilecommand.base.BaseActivity;
 import com.gongxin.mobilecommand.ui.dialog.MyDialogHint;
 import com.gongxin.mobilecommand.ui.fragment.Fragment1;
 import com.gongxin.mobilecommand.ui.fragment.Fragment4;
+import com.gongxin.mobilecommand.utils.AppManager;
 import com.gongxin.mobilecommand.utils.DensityUtil;
 import com.gongxin.mobilecommand.utils.ToastUtil;
 import com.gongxin.mobilecommand.utils.Utils;
@@ -83,6 +85,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void loadViewLayout() {
         setContentView(R.layout.activity_main);
         context = this;
+        AppManager.getAppManager().addActivity(this);
         mHeadLayout = findViewById(R.id.head_layout);
         ImageView mBack = mHeadLayout.findViewById(R.id.login_btn_back);
         mBack.setVisibility(View.GONE);
