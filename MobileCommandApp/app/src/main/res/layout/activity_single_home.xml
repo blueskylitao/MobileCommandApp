@@ -28,23 +28,25 @@
             android:background="@drawable/bar_search_bg"
             android:elevation="8dp"
             android:padding="4dp">
+
             <ImageView
                 android:id="@+id/bar_iv_search"
-                android:layout_marginStart="4dp"
-                android:src="@drawable/ic_loading"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/activity_vertical_margin"
                 android:layout_width="16dp"
-                android:layout_height="16dp" />
+                android:layout_height="16dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                android:src="@drawable/ic_loading" />
+
             <EditText
-                android:layout_toRightOf="@+id/bar_iv_search"
                 android:id="@+id/bar_et_search"
-                android:textSize="@dimen/sp_14"
-                android:hint="@string/bar_search_hint"
-                android:background="@null"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/bar_iv_search"
+                android:background="@null"
+                android:hint="@string/bar_search_hint"
                 android:inputType="text"
+                android:textSize="@dimen/sp_14"
                 tools:ignore="Autofill" />
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -56,14 +58,48 @@
         android:fitsSystemWindows="true"
         tools:openDrawer="start">
 
-        <com.google.android.material.navigation.NavigationView
+        <!--<com.google.android.material.navigation.NavigationView-->
+        <!--android:id="@+id/nav_view"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="start"-->
+        <!--android:fitsSystemWindows="false"-->
+        <!--app:headerLayout="@layout/nav_header_single_home"-->
+        <!--app:menu="@menu/activity_single_home_drawer" />-->
+
+        <RelativeLayout
             android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
+            android:background="#0B1C35"
             android:fitsSystemWindows="false"
-            app:headerLayout="@layout/nav_header_single_home"
-            app:menu="@menu/activity_single_home_drawer" />
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/nav_iv_logo"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_20"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@+id/nav_iv_logo"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                tools:text="龙岗LOGO"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/nav_rv_menu"
+               android:layout_below="@+id/nav_iv_logo"
+               android:layout_marginTop="@dimen/activity_vertical_margin"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"/>
+
+        </RelativeLayout>
 
 
     </androidx.drawerlayout.widget.DrawerLayout>

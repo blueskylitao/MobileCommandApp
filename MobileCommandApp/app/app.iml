@@ -209,6 +209,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.test:runner:1.3.0-alpha01@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.ccwork.sdk:dbbase:5.0.0.122@aar" level="project" />
     <orderEntry type="library" name="Gradle: org.apmem.tools:layouts:1.10@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.LuckSiege.PictureSelector:picture_library:v2.2.3@aar" level="project" />
     <orderEntry type="library" name="Gradle: jp.co.cyberagent.android.gpuimage:gpuimage-library:1.3.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.drawerlayout:drawerlayout:1.0.0@aar" level="project" />
@@ -239,7 +240,6 @@
     <orderEntry type="library" name="Gradle: com.ccwork.sdk:jniutil:5.0.0.122@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.fresco:animated-webp:1.9.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:adapter-rxjava2:2.4.0@jar" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.savedstate:savedstate:1.0.0-rc01@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.vectordrawable:vectordrawable-animated:1.1.0-rc01@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-viewmodel:2.1.0-rc01@aar" level="project" />

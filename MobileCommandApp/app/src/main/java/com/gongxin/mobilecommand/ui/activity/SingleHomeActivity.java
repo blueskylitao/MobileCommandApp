@@ -14,16 +14,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.gongxin.mobilecommand.R;
-import com.google.android.material.navigation.NavigationView;
-
-import org.jetbrains.annotations.NotNull;
+import com.gongxin.mobilecommand.adapter.NavMenuExpandableItemAdapter;
+import com.gongxin.mobilecommand.domain.McTargetMenuItem;
+import com.gongxin.mobilecommand.domain.NavMenuLevel0Item;
+import com.gongxin.mobilecommand.domain.NavMenuLevel1Item;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Random;
 
-public class SingleHomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+public class SingleHomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +51,20 @@ public class SingleHomeActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar!=null) {
+        if (supportActionBar != null) {
             supportActionBar.setDisplayShowTitleEnabled(false);
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
+        //侧边导航
+        RecyclerView navRvMenu = findViewById(R.id.nav_rv_menu);
+        navRvMenu.setLayoutManager(new LinearLayoutManager(this));
+        ArrayList<MultiItemEntity> list = generateData();
+        NavMenuExpandableItemAdapter navMenuExpandableItemAdapter = new NavMenuExpandableItemAdapter(list);
+        navRvMenu.setAdapter(navMenuExpandableItemAdapter);
     }
 
     @Override
@@ -86,34 +95,9 @@ public class SingleHomeActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(@NotNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
     private void statusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -125,6 +109,30 @@ public class SingleHomeActivity extends AppCompatActivity
             } catch (Exception ignored) {
             }
         }
+    }
+
+    private ArrayList<MultiItemEntity> generateData() {
+        int lv0Count = 9;
+        int lv1Count = 3;
+        int personCount = 5;
+
+        String[] nameList = {"Bob", "Andy", "Lily", "Brown", "Bruce"};
+        Random random = new Random();
+
+        ArrayList<MultiItemEntity> res = new ArrayList<>();
+        for (int i = 0; i < lv0Count; i++) {
+            NavMenuLevel0Item lv0 = new NavMenuLevel0Item("This is " + i + "th item in Level 0");
+            for (int j = 0; j < lv1Count; j++) {
+                NavMenuLevel1Item lv1 = new NavMenuLevel1Item("Level 1 item: " + j);
+                for (int k = 0; k < personCount; k++) {
+                    lv1.addSubItem(new McTargetMenuItem(nameList[k]));
+                }
+                lv0.addSubItem(lv1);
+            }
+            res.add(lv0);
+        }
+
+        return res;
     }
 
 
