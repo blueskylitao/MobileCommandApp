@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:openDrawer="start">
+
+    <!--<include-->
+    <!--android:visibility="gone"-->
+    <!--layout="@layout/app_bar_single_home"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" />-->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#fff"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <RelativeLayout
+            android:layout_width="430dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bar_search_bg"
+            android:elevation="8dp"
+            android:padding="4dp">
+            <ImageView
+                android:id="@+id/bar_iv_search"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_loading"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                android:layout_width="16dp"
+                android:layout_height="16dp" />
+            <EditText
+                android:layout_toRightOf="@+id/bar_iv_search"
+                android:id="@+id/bar_et_search"
+                android:textSize="@dimen/sp_14"
+                android:hint="@string/bar_search_hint"
+                android:background="@null"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                tools:ignore="Autofill" />
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="false"
+            app:headerLayout="@layout/nav_header_single_home"
+            app:menu="@menu/activity_single_home_drawer" />
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
+</LinearLayout>
+
+
+

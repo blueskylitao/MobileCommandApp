@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.gongxin.mobilecommand">
 
     <dist:module dist:instant="true" />
@@ -12,14 +14,10 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!--tencent x5添加-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- tencent x5添加 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!-- 指纹权限 -->
-    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
-
-    <!-- 硬件加速对X5视频播放非常重要，建议开启 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 指纹权限 -->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" /> <!-- 硬件加速对X5视频播放非常重要，建议开启 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
@@ -31,15 +29,26 @@
         android:roundIcon="@mipmap/mc_logo_ic"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="n">
+        <activity
+            android:name=".ui.activity.SingleHomeActivity"
+            android:label="@string/title_activity_single_home"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.4" />
-        <!--适配华为（huawei）刘海屏-->
+            android:value="2.4" /> <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
             android:name="android.notch_support"
-            android:value="true" />
-        <!--适配小米（xiaomi）刘海屏-->
+            android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />
@@ -48,24 +57,24 @@
             android:name=".ui.activity.login.IntroductActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize|orientation"
             android:theme="@style/Theme.AppStartLoad">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
-
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize|orientation"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-
-        <!--  <activity
+        <!--
+  <activity
               android:name=".ui.activity.login.LoginActivity"
               android:launchMode="singleTask"
-              android:windowSoftInputMode="adjustResize|stateHidden" />-->
+              android:windowSoftInputMode="adjustResize|stateHidden" />
+        -->
         <activity
             android:name=".ui.activity.PublicWebviewActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize|orientation" />
@@ -86,7 +95,6 @@
         <activity
             android:name=".ui.activity.SetIpAddressActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize|orientation" />
-
     </application>
 
 </manifest>
