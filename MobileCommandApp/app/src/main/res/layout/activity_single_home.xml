@@ -22,8 +22,8 @@
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
         <RelativeLayout
-            android:layout_width="430dp"
-            android:layout_height="42dp"
+            android:layout_width="404dp"
+            android:layout_height="39dp"
             android:layout_gravity="center"
             android:background="@drawable/bar_search_bg"
             android:elevation="8dp"
@@ -42,7 +42,7 @@
                 android:id="@+id/bar_et_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/bar_iv_search"
+                android:layout_toEndOf="@+id/bar_iv_search"
                 android:background="@null"
                 android:hint="@string/bar_search_hint"
                 android:inputType="text"
@@ -69,7 +69,7 @@
 
         <RelativeLayout
             android:id="@+id/nav_view"
-            android:layout_width="300dp"
+            android:layout_width="282dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="#0B1C35"
@@ -78,12 +78,12 @@
 
             <ImageView
                 android:id="@+id/nav_iv_logo"
-                android:layout_width="@dimen/dp_40"
-                android:layout_height="@dimen/dp_40"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
-                android:textColor="@color/white"
+                android:textColor="#2893B4"
                 android:textSize="@dimen/text_size_20"
                 android:layout_marginTop="8dp"
                 android:layout_toEndOf="@+id/nav_iv_logo"
@@ -101,6 +101,11 @@
 
         </RelativeLayout>
 
+        <ImageView
+            android:scaleType="fitXY"
+            android:src="@mipmap/test"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 

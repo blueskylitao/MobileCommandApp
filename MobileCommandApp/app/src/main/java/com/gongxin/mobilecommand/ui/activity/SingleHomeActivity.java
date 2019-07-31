@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,12 +32,17 @@ import java.util.Random;
 
 public class SingleHomeActivity extends AppCompatActivity {
 
+    private static final String TAG = SingleHomeActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initStatusBar();
         setContentView(R.layout.activity_single_home);
         initActionBarAndNavView();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        Log.e(TAG, displayMetrics.densityDpi+"onCreate: ");
     }
 
     private void initStatusBar() {

@@ -53,6 +53,13 @@
             android:name="notch.config"
             android:value="portrait|landscape" />
 
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="1204"/>
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="724"/>
+
         <activity
             android:name=".ui.activity.login.IntroductActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize|orientation"
