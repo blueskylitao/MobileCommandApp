@@ -36,7 +36,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="@dimen/activity_vertical_margin"
-                android:src="@drawable/ic_loading" />
+                android:src="@mipmap/bar_et_search" />
 
             <EditText
                 android:id="@+id/bar_et_search"
@@ -66,6 +66,60 @@
         <!--android:fitsSystemWindows="false"-->
         <!--app:headerLayout="@layout/nav_header_single_home"-->
         <!--app:menu="@menu/activity_single_home_drawer" />-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="404dp"
+                android:layout_height="18.8dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/home_label_ybp"
+                    android:textColor="#0E5DA1"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/home_label_jcfx"
+                    android:textColor="#cccccc"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/home_label_yjld"
+                    android:textColor="#cccccc"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/home_label_sjyzh"
+                    android:textColor="#cccccc"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            <FrameLayout
+                android:layout_weight="1"
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"/>
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/nav_view"
@@ -83,29 +137,26 @@
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
-                android:textColor="#2893B4"
-                android:textSize="@dimen/text_size_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="8dp"
                 android:layout_toEndOf="@+id/nav_iv_logo"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                tools:text="龙岗LOGO"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textColor="#2893B4"
+                android:textSize="@dimen/text_size_20"
+                tools:text="龙岗LOGO" />
 
-           <androidx.recyclerview.widget.RecyclerView
-               android:id="@+id/nav_rv_menu"
-               android:layout_below="@+id/nav_iv_logo"
-               android:layout_marginTop="@dimen/activity_vertical_margin"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/nav_rv_menu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/nav_iv_logo"
+                android:layout_marginTop="@dimen/activity_vertical_margin" />
 
         </RelativeLayout>
 
-        <ImageView
-            android:scaleType="fitXY"
-            android:src="@mipmap/test"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+
+
 
     </androidx.drawerlayout.widget.DrawerLayout>
 

@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +24,7 @@ import com.gongxin.mobilecommand.adapter.NavMenuExpandableItemAdapter;
 import com.gongxin.mobilecommand.domain.McTargetMenuItem;
 import com.gongxin.mobilecommand.domain.NavMenuLevel0Item;
 import com.gongxin.mobilecommand.domain.NavMenuLevel1Item;
+import com.gongxin.mobilecommand.ui.fragment.DashboardFragment;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -34,15 +34,22 @@ public class SingleHomeActivity extends AppCompatActivity {
 
     private static final String TAG = SingleHomeActivity.class.getSimpleName();
 
+    private Fragment mDashboardFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initStatusBar();
         setContentView(R.layout.activity_single_home);
         initActionBarAndNavView();
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        Log.e(TAG, displayMetrics.densityDpi+"onCreate: ");
+        initContent();
+    }
+
+    private void initContent() {
+        mDashboardFragment = new DashboardFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, mDashboardFragment, DashboardFragment.TAG)        //.addToBackStack("fname")
+                .commit();
     }
 
     private void initStatusBar() {
