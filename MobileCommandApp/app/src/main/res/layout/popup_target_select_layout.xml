@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:background="@color/white"
+    android:layout_height="300dp"
+    android:orientation="vertical">
+    <TextView
+        android:text="last"
+        android:visibility="gone"
+        android:id="@+id/tv_last_level"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_weight="1"
+        android:id="@+id/popup_rv_target"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+</LinearLayout>

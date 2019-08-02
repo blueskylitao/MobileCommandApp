@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -37,7 +37,7 @@ import java.util.Map;
 import butterknife.ButterKnife;
 
 
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     protected Context context = this;
     protected Activity activity = this;
     protected ProgressDialog pDialog;
@@ -46,17 +46,18 @@ public abstract class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onBeforeSetContentLayout();
-        //禁止横屏
-      //  setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        initView();
-        ButterKnife.bind(this);
         //初始化沉浸式
         ImmersionBar.with(this)
-                .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
+                .fitsSystemWindows(false)  //使用该属性,必须指定状态栏颜色
                 .statusBarColor(R.color.white)
                 .statusBarDarkFont(true, 0.2f)
                 //   .statusBarDarkFont(true)   //状态栏字体是深色，不写默认为亮色
                 .init();
+        //禁止横屏
+      //  setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        initView();
+        ButterKnife.bind(this);
+
         initdata();
         AppManager.getAppManager().addActivity(this);
         Logger.d("当前Activity 栈中有：" + AppManager.getAppManager().getActivityCount() + "个Activity");

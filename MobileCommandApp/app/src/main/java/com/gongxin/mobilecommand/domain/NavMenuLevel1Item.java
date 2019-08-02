@@ -11,13 +11,49 @@ import static com.gongxin.mobilecommand.adapter.NavMenuExpandableItemAdapter.TYP
  */
 public class NavMenuLevel1Item extends AbstractExpandableItem<McTargetMenuItem> implements MultiItemEntity {
     private String name;
-
+    private int id;//1
+    private int parentId;//0
+    private String url;
+    private String path;//0-1
     public NavMenuLevel1Item(String name) {
         this.name = name;
     }
 
     public NavMenuLevel1Item() {
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     public String getName() {
         return name;
     }

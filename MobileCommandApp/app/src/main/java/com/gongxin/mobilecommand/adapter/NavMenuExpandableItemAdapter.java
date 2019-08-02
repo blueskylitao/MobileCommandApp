@@ -1,12 +1,12 @@
 package com.gongxin.mobilecommand.adapter;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.chad.library.adapter.base.entity.IExpandable;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.domain.McTargetMenuItem;
@@ -24,17 +24,22 @@ public class NavMenuExpandableItemAdapter extends BaseMultiItemQuickAdapter<Mult
     public static final int TYPE_LEVEL_1 = 1;
     public static final int TYPE_MENU_TARGET = 2;
 
+    private OnLevel1ItemClickListener mLevel1ItemClickListener;
+
+
+
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
      *
      * @param data A new list is created out of this one to avoid mutable list
      */
-    public NavMenuExpandableItemAdapter(List<MultiItemEntity> data) {
+    public NavMenuExpandableItemAdapter(List<MultiItemEntity> data, Context context) {
         super(data);
         addItemType(TYPE_LEVEL_0, R.layout.item_nav_menu_expandable_lv0);
         addItemType(TYPE_LEVEL_1, R.layout.item_nav_menu_expandable_lv1);
         addItemType(TYPE_MENU_TARGET, R.layout.item_nav_menu_expandable_lv2);
+
     }
 
 
@@ -66,26 +71,29 @@ public class NavMenuExpandableItemAdapter extends BaseMultiItemQuickAdapter<Mult
                 holder.itemView.setOnClickListener(v -> {
                     int pos = holder.getAdapterPosition();
                     Log.d(TAG, "Level 1 item pos: " + pos);
-                    if (lv1.isExpanded()) {
-                        collapse(pos, false);
-                    } else {
-                        expand(pos, false);
+                    if (mLevel1ItemClickListener != null){
+                        mLevel1ItemClickListener.onLevel1ItemClick(lv1);
                     }
+//                    if (lv1.isExpanded()) {
+//                        collapse(pos, false);
+//                    } else {
+//                        expand(pos, false);
+//                    }
                 });
 
-                holder.itemView.setOnLongClickListener(v -> {
-                    int pos = holder.getAdapterPosition();
-                    // 先获取到当前 item 的父 positon，再移除自己
-                    int positionAtAll = getParentPositionInAll(pos);
-                    remove(pos);
-                    if (positionAtAll != -1) {
-                        IExpandable multiItemEntity = (IExpandable) getData().get(positionAtAll);
-                        if (!hasSubItems(multiItemEntity)) {
-                            remove(positionAtAll);
-                        }
-                    }
-                    return true;
-                });
+//                holder.itemView.setOnLongClickListener(v -> {
+//                    int pos = holder.getAdapterPosition();
+//                    // 先获取到当前 item 的父 positon，再移除自己
+//                    int positionAtAll = getParentPositionInAll(pos);
+//                    remove(pos);
+//                    if (positionAtAll != -1) {
+//                        IExpandable multiItemEntity = (IExpandable) getData().get(positionAtAll);
+//                        if (!hasSubItems(multiItemEntity)) {
+//                            remove(positionAtAll);
+//                        }
+//                    }
+//                    return true;
+//                });
                 break;
             case TYPE_MENU_TARGET:
                 final McTargetMenuItem person = (McTargetMenuItem) item;
@@ -107,4 +115,13 @@ public class NavMenuExpandableItemAdapter extends BaseMultiItemQuickAdapter<Mult
                 break;
         }
     }
+
+    public void setLevel1ItemClickListener(OnLevel1ItemClickListener mLevel1ItemClickListener) {
+        this.mLevel1ItemClickListener = mLevel1ItemClickListener;
+    }
+
+    public interface OnLevel1ItemClickListener{
+        void onLevel1ItemClick(NavMenuLevel1Item item);
+    }
+
 }

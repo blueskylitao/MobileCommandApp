@@ -1,16 +1,12 @@
 package com.gongxin.mobilecommand.ui.activity;
 
-import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -18,32 +14,78 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.adapter.NavMenuExpandableItemAdapter;
+import com.gongxin.mobilecommand.base.BaseActivity;
 import com.gongxin.mobilecommand.domain.McTargetMenuItem;
 import com.gongxin.mobilecommand.domain.NavMenuLevel0Item;
 import com.gongxin.mobilecommand.domain.NavMenuLevel1Item;
 import com.gongxin.mobilecommand.ui.fragment.DashboardFragment;
+import com.gongxin.mobilecommand.view.popup.McTargetSelectPopup;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
+import com.lxj.xpopup.enums.PopupAnimation;
+import com.lzy.okgo.model.HttpParams;
+import com.lzy.okgo.model.Response;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
 
-public class SingleHomeActivity extends AppCompatActivity {
+public class SingleHomeActivity extends BaseActivity implements NavMenuExpandableItemAdapter.OnLevel1ItemClickListener, McTargetSelectPopup.OnTargetItemClickListener {
 
     private static final String TAG = SingleHomeActivity.class.getSimpleName();
+    private static final int REQUEST_TYPE_TARGET_CATEGORY = 1;
+    private static final int REQUEST_TYPE_TARGET_TARGET = 2;
 
     private Fragment mDashboardFragment;
+    private NavMenuExpandableItemAdapter mNavMenuExpandableItemAdapter;
+
+    private McTargetSelectPopup mcTargetSelectPopup;
+
+    private BasePopupView mcTargetSelectPopupView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initStatusBar();
         setContentView(R.layout.activity_single_home);
         initActionBarAndNavView();
         initContent();
+        loadDataFromServe();
     }
+
+    private void initTargetPopup() {
+        mcTargetSelectPopup = new McTargetSelectPopup(context);
+        mcTargetSelectPopup.setOnTargetItemClickListener(this);
+        mcTargetSelectPopupView =  new XPopup.Builder(context)
+                .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
+                .isCenterHorizontal(true)
+                .offsetY(200)
+                .hasShadowBg(false)
+                .dismissOnTouchOutside(false)
+                .asCustom(mcTargetSelectPopup);
+    }
+
+    private void loadDataFromServe() {
+        showProgressDialog(getString(R.string.dialog_loading));
+        loadMenuCategoryData(0,REQUEST_TYPE_TARGET_CATEGORY);
+    }
+
+    /**
+     * 加载菜单栏指标分类数据
+     */
+    private void loadMenuCategoryData(int parentId,int requestId) {
+
+        try {
+            HttpParams httpParams = new HttpParams();
+            httpParams.put("parentId",parentId);
+            httpRequestByGet("/command/targetTree", httpParams, requestId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void initContent() {
         mDashboardFragment = new DashboardFragment();
@@ -52,14 +94,6 @@ public class SingleHomeActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private void initStatusBar() {
-        //状态栏中的文字颜色和图标颜色，需要android系统6.0以上，而且目前只有一种可以修改（一种是深色，一种是浅色即白色）
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            //修改为深色，因为我们把状态栏的背景色修改为主题色白色，默认的文字及图标颜色为白色，导致看不到了。
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
-        statusBarColor();
-    }
 
     private void initActionBarAndNavView() {
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -76,9 +110,37 @@ public class SingleHomeActivity extends AppCompatActivity {
         //侧边导航
         RecyclerView navRvMenu = findViewById(R.id.nav_rv_menu);
         navRvMenu.setLayoutManager(new LinearLayoutManager(this));
-        ArrayList<MultiItemEntity> list = generateData();
-        NavMenuExpandableItemAdapter navMenuExpandableItemAdapter = new NavMenuExpandableItemAdapter(list);
-        navRvMenu.setAdapter(navMenuExpandableItemAdapter);
+        ArrayList<MultiItemEntity> list = new ArrayList<>();
+        mNavMenuExpandableItemAdapter = new NavMenuExpandableItemAdapter(list,this);
+        navRvMenu.setAdapter(mNavMenuExpandableItemAdapter);
+        mNavMenuExpandableItemAdapter.setLevel1ItemClickListener(this);
+    }
+
+    @Override
+    protected void onHttpRequestResult(Response<String> response, int requestId) {
+        super.onHttpRequestResult(response, requestId);
+        Log.e(TAG, "onHttpRequestResult: "+response.body() );
+        if (requestId == REQUEST_TYPE_TARGET_CATEGORY) handMenuCategoryData(response);
+        if (requestId == REQUEST_TYPE_TARGET_TARGET) handMenuTargetData(response);
+
+    }
+
+    @Override
+    protected void onHttpRequestErr(Response<String> response, int requestId) {
+        super.onHttpRequestErr(response, requestId);
+    }
+
+    private void handMenuCategoryData(Response<String> response) {
+        List<NavMenuLevel0Item> navMenuLevel0Items = JSON.parseArray(response.body(), NavMenuLevel0Item.class);
+        for (NavMenuLevel0Item navMenuLevel0Item : navMenuLevel0Items) {
+            navMenuLevel0Item.setSubItems(navMenuLevel0Item.getChild());
+        }
+        mNavMenuExpandableItemAdapter.addData(navMenuLevel0Items);
+    }
+
+    private void handMenuTargetData(Response<String> response) {
+        List<McTargetMenuItem> mcTargetMenuItemList = JSON.parseArray(response.body(), McTargetMenuItem.class);
+        mcTargetSelectPopup.toggleData(mcTargetMenuItemList);
     }
 
     @Override
@@ -113,41 +175,40 @@ public class SingleHomeActivity extends AppCompatActivity {
     }
 
 
-    private void statusBarColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            try {
-                @SuppressLint("PrivateApi") Class decorViewClazz = Class.forName("com.android.internal.policy.DecorView");
-                Field field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor");
-                field.setAccessible(true);
-                field.setInt(getWindow().getDecorView(), Color.TRANSPARENT);  //改为透明
-            } catch (Exception ignored) {
-            }
-        }
+
+
+    @Override
+    protected void loadViewLayout() {
+
     }
 
-    private ArrayList<MultiItemEntity> generateData() {
-        int lv0Count = 9;
-        int lv1Count = 3;
-        int personCount = 5;
+    @Override
+    protected void findViewById() {
 
-        String[] nameList = {"Bob", "Andy", "Lily", "Brown", "Bruce"};
-        Random random = new Random();
-
-        ArrayList<MultiItemEntity> res = new ArrayList<>();
-        for (int i = 0; i < lv0Count; i++) {
-            NavMenuLevel0Item lv0 = new NavMenuLevel0Item("This is " + i + "th item in Level 0");
-            for (int j = 0; j < lv1Count; j++) {
-                NavMenuLevel1Item lv1 = new NavMenuLevel1Item("Level 1 item: " + j);
-                for (int k = 0; k < personCount; k++) {
-                    lv1.addSubItem(new McTargetMenuItem(nameList[k]));
-                }
-                lv0.addSubItem(lv1);
-            }
-            res.add(lv0);
-        }
-
-        return res;
     }
 
+    @Override
+    protected void setListener() {
 
+    }
+
+    @Override
+    protected void processLogic() {
+
+    }
+
+    @Override
+    public void onLevel1ItemClick(NavMenuLevel1Item item) {
+        if (mcTargetSelectPopupView == null){
+            initTargetPopup();
+        }
+        mcTargetSelectPopup.pushParentId(item.getId());
+        mcTargetSelectPopupView.toggle();
+        loadMenuCategoryData(item.getId(),REQUEST_TYPE_TARGET_TARGET);
+    }
+
+    @Override
+    public void onTargetItemClick(int id) {
+        loadMenuCategoryData(id,REQUEST_TYPE_TARGET_TARGET);
+    }
 }
