@@ -2,6 +2,7 @@ package com.gongxin.mobilecommand.view.popup;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,9 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
     protected void onCreate() {
         super.onCreate();
 
+        Button btnClose = findViewById(R.id.btn_close);
+        btnClose.setOnClickListener(this);
+
         mTvBackLevel = findViewById(R.id.tv_last_level);
         mTvBackLevel.setOnClickListener(this);
 
@@ -54,6 +58,7 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
         mcTargetAdapter = new McTargetAdapter(R.layout.item_mc_target_layout,new ArrayList<>());
         mcTargetAdapter.setOnItemClickListener(this);
         mRvTargetList.setAdapter(mcTargetAdapter);
+
     }
 
     public void toggleData(List<McTargetMenuItem> list){
@@ -80,21 +85,28 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
 
     @Override
     public void onClick(View v) {
-        if (mOnTargetItemClickListener!=null){
-            ids.pop();
-            int id = ids.peek();
-            mOnTargetItemClickListener.onTargetItemClick(id);
-            if (ids.size() <= 1){
-                mTvBackLevel.setVisibility(GONE);
+        if (v.getId() == R.id.tv_last_level){
+            if (mOnTargetItemClickListener!=null){
+                ids.pop();
+                int id = ids.peek();
+                mOnTargetItemClickListener.onTargetItemClick(id);
+                if (ids.size() <= 1){
+                    mTvBackLevel.setVisibility(GONE);
+                }
             }
+        }else if(v.getId() == R.id.btn_close){
+            toggle();
         }
+
     }
 
     @Override
     protected void onDismiss() {
         super.onDismiss();
-        ids.empty();
+        ids.clear();
     }
+
+
 
     public interface OnTargetItemClickListener{
         void onTargetItemClick(int id);
