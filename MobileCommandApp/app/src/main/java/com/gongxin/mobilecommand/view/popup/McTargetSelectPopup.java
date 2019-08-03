@@ -27,7 +27,7 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
 
     private static final String TAG = McTargetMenuItem.class.getSimpleName();
 
-    private Stack<Integer> ids = new Stack<>();
+    private Stack<McTargetMenuItem> ids = new Stack<>();
 
     private McTargetAdapter mcTargetAdapter;
 
@@ -74,11 +74,9 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
         if (mOnTargetItemClickListener!=null){
             McTargetMenuItem item = (McTargetMenuItem) adapter.getItem(position);
             if (item != null){
-                ids.push(item.getId());
-                mOnTargetItemClickListener.onTargetItemClick(item.getId());
-                if (ids.size() > 1){
-                    mTvBackLevel.setVisibility(VISIBLE);
-                }
+                setTitle(item.getName());
+                ids.push(item);
+                mOnTargetItemClickListener.onTargetItemClick(item);
             }
         }
     }
@@ -86,13 +84,15 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.tv_last_level){
+            if (ids.size() <= 1){
+                toggle();
+                return;
+            }
             if (mOnTargetItemClickListener!=null){
                 ids.pop();
-                int id = ids.peek();
-                mOnTargetItemClickListener.onTargetItemClick(id);
-                if (ids.size() <= 1){
-                    mTvBackLevel.setVisibility(GONE);
-                }
+                McTargetMenuItem item = ids.peek();
+                setTitle(item.getName());
+                mOnTargetItemClickListener.onTargetItemClick(item);
             }
         }else if(v.getId() == R.id.btn_close){
             toggle();
@@ -107,14 +107,19 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
     }
 
 
-
     public interface OnTargetItemClickListener{
-        void onTargetItemClick(int id);
+        void onTargetItemClick(McTargetMenuItem id);
     }
 
-    public void pushParentId(int id){
+    public void pushParentId(McTargetMenuItem item){
         if (ids.isEmpty()){
-            ids.push(id);
+            ids.push(item);
+            setTitle(item.getName());
         }
+    }
+
+    private void setTitle(String title){
+        TextView titleView = findViewById(R.id.tv_title);
+        titleView.setText(title);
     }
 }

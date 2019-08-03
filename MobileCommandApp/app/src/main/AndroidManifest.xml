@@ -34,6 +34,7 @@
         <activity
             android:name=".ui.activity.SingleHomeActivity"
             android:label="@string/title_activity_single_home"
+            android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

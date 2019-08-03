@@ -1,9 +1,14 @@
 package com.gongxin.mobilecommand.ui.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -23,21 +28,26 @@ import com.gongxin.mobilecommand.domain.McTargetMenuItem;
 import com.gongxin.mobilecommand.domain.NavMenuLevel0Item;
 import com.gongxin.mobilecommand.domain.NavMenuLevel1Item;
 import com.gongxin.mobilecommand.ui.fragment.DashboardFragment;
+import com.gongxin.mobilecommand.utils.DensityUtil;
+import com.gongxin.mobilecommand.utils.ToastUtil;
 import com.gongxin.mobilecommand.view.popup.McTargetSelectPopup;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
 import com.lxj.xpopup.enums.PopupAnimation;
+import com.lxj.xpopup.util.KeyboardUtils;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SingleHomeActivity extends BaseActivity implements NavMenuExpandableItemAdapter.OnLevel1ItemClickListener, McTargetSelectPopup.OnTargetItemClickListener {
+public class SingleHomeActivity extends BaseActivity implements NavMenuExpandableItemAdapter.OnLevel1ItemClickListener, McTargetSelectPopup.OnTargetItemClickListener, View.OnKeyListener, View.OnClickListener {
 
     private static final String TAG = SingleHomeActivity.class.getSimpleName();
     private static final int REQUEST_TYPE_TARGET_CATEGORY = 1;
     private static final int REQUEST_TYPE_TARGET_TARGET = 2;
+    private static final int REQUEST_TYPE_TARGET_SEARCH = 3;
+    private static final int REQUEST_TYPE_TARGET_USUAL = 4;
 
     private Fragment mDashboardFragment;
     private NavMenuExpandableItemAdapter mNavMenuExpandableItemAdapter;
@@ -45,6 +55,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
     private McTargetSelectPopup mcTargetSelectPopup;
 
     private BasePopupView mcTargetSelectPopupView;
+    private EditText mNavEtSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +67,16 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
     }
 
     private void initTargetPopup() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         mcTargetSelectPopup = new McTargetSelectPopup(context);
         mcTargetSelectPopup.setOnTargetItemClickListener(this);
         mcTargetSelectPopupView =  new XPopup.Builder(context)
                 .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
-                .isCenterHorizontal(true)
-                .offsetY(200)
+                .offsetY(displayMetrics.heightPixels- DensityUtil.dip2px(this,634))
+                .offsetX(findViewById(R.id.nav_view).getMeasuredWidth()+20)
                 .hasShadowBg(false)
-                .dismissOnTouchOutside(false)
+                .moveUpToKeyboard(false)
                 .asCustom(mcTargetSelectPopup);
     }
 
@@ -81,6 +94,26 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
             HttpParams httpParams = new HttpParams();
             httpParams.put("parentId",parentId);
             httpRequestByGet("/command/targetTree", httpParams, requestId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void searchTarget(String targetName){
+        try {
+            HttpParams httpParams = new HttpParams();
+            httpParams.put("targetName",targetName);
+            httpRequestByGet("/command/getTargetByName", httpParams, REQUEST_TYPE_TARGET_SEARCH);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadUsualTarget(){
+        try {
+            HttpParams httpParams = new HttpParams();
+            httpParams.put("count",20);
+            httpRequestByGet("/command/usual", httpParams, REQUEST_TYPE_TARGET_USUAL);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -106,6 +139,15 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
+        drawer.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                if (mcTargetSelectPopupView==null){
+                    initTargetPopup();
+                }
+            }
+        });
         toggle.syncState();
         //侧边导航
         RecyclerView navRvMenu = findViewById(R.id.nav_rv_menu);
@@ -114,6 +156,11 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         mNavMenuExpandableItemAdapter = new NavMenuExpandableItemAdapter(list,this);
         navRvMenu.setAdapter(mNavMenuExpandableItemAdapter);
         mNavMenuExpandableItemAdapter.setLevel1ItemClickListener(this);
+
+        mNavEtSearch = findViewById(R.id.nav_et_search);
+        mNavEtSearch.setOnKeyListener(this);
+
+        findViewById(R.id.nav_tv_usual).setOnClickListener(this);
     }
 
     @Override
@@ -122,6 +169,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         Log.e(TAG, "onHttpRequestResult: "+response.body() );
         if (requestId == REQUEST_TYPE_TARGET_CATEGORY) handMenuCategoryData(response);
         if (requestId == REQUEST_TYPE_TARGET_TARGET) handMenuTargetData(response);
+        if (requestId == REQUEST_TYPE_TARGET_SEARCH) handTargetSearch(response);
 
     }
 
@@ -139,6 +187,11 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
     }
 
     private void handMenuTargetData(Response<String> response) {
+        List<McTargetMenuItem> mcTargetMenuItemList = JSON.parseArray(response.body(), McTargetMenuItem.class);
+        mcTargetSelectPopup.toggleData(mcTargetMenuItemList);
+    }
+
+    private void handTargetSearch(Response<String> response){
         List<McTargetMenuItem> mcTargetMenuItemList = JSON.parseArray(response.body(), McTargetMenuItem.class);
         mcTargetSelectPopup.toggleData(mcTargetMenuItemList);
     }
@@ -199,16 +252,40 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
 
     @Override
     public void onLevel1ItemClick(NavMenuLevel1Item item) {
-        if (mcTargetSelectPopupView == null){
-            initTargetPopup();
-        }
-        mcTargetSelectPopup.pushParentId(item.getId());
+        McTargetMenuItem mcTargetMenuItem = new McTargetMenuItem();
+        mcTargetMenuItem.setName(item.getName());
+        mcTargetMenuItem.setId(item.getId());
+        mcTargetSelectPopup.pushParentId(mcTargetMenuItem);
         mcTargetSelectPopupView.toggle();
         loadMenuCategoryData(item.getId(),REQUEST_TYPE_TARGET_TARGET);
     }
 
     @Override
-    public void onTargetItemClick(int id) {
-        loadMenuCategoryData(id,REQUEST_TYPE_TARGET_TARGET);
+    public void onTargetItemClick(McTargetMenuItem item) {
+        loadMenuCategoryData(item.getId(),REQUEST_TYPE_TARGET_TARGET);
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+            if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN){
+                KeyboardUtils.hideSoftInput(v);
+                String targetName = mNavEtSearch.getText().toString();
+                if (TextUtils.isEmpty(targetName)){
+                    ToastUtil.shortToast(this,"请输入指标名称");
+                    return false;
+                }
+                mcTargetSelectPopupView.toggle();
+                searchTarget(targetName);
+                return true;
+            }
+            return false;
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        mcTargetSelectPopupView.toggle();
+        loadUsualTarget();
     }
 }

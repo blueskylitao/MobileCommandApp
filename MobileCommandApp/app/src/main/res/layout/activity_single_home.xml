@@ -130,27 +130,57 @@
             android:fitsSystemWindows="false"
             android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/nav_iv_logo"
-                android:layout_width="37dp"
-                android:layout_height="37dp"
-                android:src="@mipmap/ic_launcher" />
+
+            <RelativeLayout
+                android:id="@+id/nav_top"
+                android:layout_width="176.9dp"
+                android:layout_height="39.5dp"
+                android:layout_gravity="center"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:background="#3B495D">
+
+                <ImageView
+                    android:contentDescription="@null"
+                    android:id="@+id/nav_iv_search"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="@dimen/activity_vertical_margin"
+                    android:src="@mipmap/bar_et_search" />
+
+                <EditText
+                    android:textColor="@color/white"
+                    android:id="@+id/nav_et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/nav_iv_search"
+                    android:background="@null"
+                    android:hint="@string/menu_search_hint"
+                    android:inputType="text"
+                    android:textColorHint="@color/white"
+                    android:imeOptions="actionSearch"
+                    android:textSize="@dimen/sp_14"
+                    tools:ignore="Autofill" />
+            </RelativeLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="8dp"
-                android:layout_toEndOf="@+id/nav_iv_logo"
-                android:textColor="#2893B4"
-                android:textSize="@dimen/text_size_20"
-                tools:text="龙岗LOGO" />
+                android:id="@+id/nav_tv_usual"
+                android:background="@drawable/nav_header_used"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:textColor="#2DD8BB"
+                android:text="常用"
+                android:layout_width="39.5dp"
+                android:layout_height="39.5dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/nav_rv_menu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/nav_iv_logo"
+                android:layout_below="@+id/nav_top"
                 android:layout_marginTop="@dimen/activity_vertical_margin" />
 
         </RelativeLayout>

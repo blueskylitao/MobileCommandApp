@@ -52,5 +52,6 @@
     <string name="home_label_jcfx">决策分析</string>
     <string name="home_label_yjld">预警雷达</string>
     <string name="home_label_sjyzh">事件与指挥</string>
+    <string name="menu_search_hint">搜索过滤</string>
 
 </resources>

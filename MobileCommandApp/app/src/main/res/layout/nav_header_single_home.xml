@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#0B1C35"
     android:gravity="bottom"
     android:orientation="vertical"
@@ -11,14 +12,34 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/nav_header_desc"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+    <RelativeLayout
+        android:layout_width="176.9dp"
+        android:layout_height="39.5dp"
+        android:layout_gravity="center"
+        android:background="#3B495D">
+
+        <ImageView
+            android:contentDescription="@null"
+            android:id="@+id/bar_iv_search"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            android:src="@mipmap/bar_et_search" />
+
+        <EditText
+            android:id="@+id/bar_et_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/bar_iv_search"
+            android:background="@null"
+            android:hint="@string/menu_search_hint"
+            android:inputType="text"
+            android:textSize="@dimen/sp_14"
+            tools:ignore="Autofill" />
+    </RelativeLayout>
 
 
 
-</LinearLayout>
+</RelativeLayout>
