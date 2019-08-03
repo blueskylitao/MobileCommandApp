@@ -26,7 +26,7 @@
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_gravity="right|center"
-        android:src="@mipmap/arrow_r"
+        android:src="@mipmap/nav_menu_arrow_right"
         tools:ignore="RtlHardcoded" />
     <View
         android:layout_alignParentBottom="true"

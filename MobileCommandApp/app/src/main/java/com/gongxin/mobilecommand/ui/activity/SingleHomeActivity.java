@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,6 +18,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +31,7 @@ import com.gongxin.mobilecommand.base.BaseActivity;
 import com.gongxin.mobilecommand.domain.McTargetMenuItem;
 import com.gongxin.mobilecommand.domain.NavMenuLevel0Item;
 import com.gongxin.mobilecommand.domain.NavMenuLevel1Item;
+import com.gongxin.mobilecommand.ui.fragment.BrowserFragment;
 import com.gongxin.mobilecommand.ui.fragment.DashboardFragment;
 import com.gongxin.mobilecommand.utils.DensityUtil;
 import com.gongxin.mobilecommand.utils.ToastUtil;
@@ -49,7 +54,12 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
     private static final int REQUEST_TYPE_TARGET_SEARCH = 3;
     private static final int REQUEST_TYPE_TARGET_USUAL = 4;
 
-    private Fragment mDashboardFragment;
+    private FragmentManager fManager;
+    private Fragment mYiFragment;//仪表盘
+    private Fragment mJueFragment;//决策分析
+    private Fragment mYuFragment;//预警雷达
+    private Fragment mShiFragment;//事件与指挥
+
     private NavMenuExpandableItemAdapter mNavMenuExpandableItemAdapter;
 
     private McTargetSelectPopup mcTargetSelectPopup;
@@ -65,6 +75,111 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         initContent();
         loadDataFromServe();
     }
+
+    private void switchTab(int tabId){
+        resetTab();
+        FragmentTransaction transaction = fManager.beginTransaction();
+        hideFragment(transaction);
+        if (tabId == R.id.ll_tab1){
+            TextView tvTab1 = findViewById(R.id.tv_tab_1);
+            tvTab1.setTextColor(getResources().getColor(R.color.color_bar_tab_selected));
+            ImageView ivTab1 = findViewById(R.id.iv_tab_1);
+            ivTab1.setImageResource(R.mipmap.bar_yibiaopan_selected);
+            if (mYiFragment == null){
+                mYiFragment = new DashboardFragment();
+                transaction.add(R.id.container,mYiFragment,"f1");
+            }else {
+                transaction.show(mYiFragment);
+            }
+        }else if (tabId == R.id.ll_tab2){
+            TextView tvTab2 = findViewById(R.id.tv_tab_2);
+            tvTab2.setTextColor(getResources().getColor(R.color.color_bar_tab_selected));
+            ImageView ivTab2 = findViewById(R.id.iv_tab_2);
+            ivTab2.setImageResource(R.mipmap.bar_juecefenxi_selected);
+            if (mJueFragment == null){
+                mJueFragment = new BrowserFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("url","baidu");
+                mJueFragment.setArguments(bundle);
+                transaction.add(R.id.container,mJueFragment,"f2");
+            }else {
+                transaction.show(mJueFragment);
+            }
+        }else if(tabId == R.id.ll_tab3){
+            TextView tvTab3 = findViewById(R.id.tv_tab_3);
+            tvTab3.setTextColor(getResources().getColor(R.color.color_bar_tab_selected));
+            ImageView ivTab3 = findViewById(R.id.iv_tab_3);
+            ivTab3.setImageResource(R.mipmap.bar_yujingleida_selected);
+            if (mYuFragment == null){
+                mYuFragment = new BrowserFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("url","ten");
+                mYuFragment.setArguments(bundle);
+                transaction.add(R.id.container,mYuFragment,"f3");
+            }else {
+                transaction.show(mYuFragment);
+            }
+        }else if (tabId == R.id.ll_tab4){
+            TextView tvTab4 = findViewById(R.id.tv_tab_4);
+            tvTab4.setTextColor(getResources().getColor(R.color.color_bar_tab_selected));
+            ImageView ivTab4 = findViewById(R.id.iv_tab_4);
+            ivTab4.setImageResource(R.mipmap.bar_shijianyuzhihui_selected);
+            if (mShiFragment == null){
+                mShiFragment = new BrowserFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("url","ali");
+                mShiFragment.setArguments(bundle);
+                transaction.add(R.id.container,mShiFragment,"f4");
+            }else {
+                transaction.show(mShiFragment);
+            }
+        }
+        transaction.commitAllowingStateLoss();
+    }
+
+    private void resetTab(){
+        TextView tvTab1 = findViewById(R.id.tv_tab_1);
+        TextView tvTab2 = findViewById(R.id.tv_tab_2);
+        TextView tvTab3 = findViewById(R.id.tv_tab_3);
+        TextView tvTab4 = findViewById(R.id.tv_tab_4);
+
+        ImageView ivTab1 = findViewById(R.id.iv_tab_1);
+        ImageView ivTab2 = findViewById(R.id.iv_tab_2);
+        ImageView ivTab3 = findViewById(R.id.iv_tab_3);
+        ImageView ivTab4 = findViewById(R.id.iv_tab_4);
+
+
+        tvTab1.setTextColor(getResources().getColor(R.color.color_bar_tab_default));
+        tvTab2.setTextColor(getResources().getColor(R.color.color_bar_tab_default));
+        tvTab3.setTextColor(getResources().getColor(R.color.color_bar_tab_default));
+        tvTab4.setTextColor(getResources().getColor(R.color.color_bar_tab_default));
+
+
+        ivTab1.setImageResource(R.mipmap.bar_yibiaopan);
+        ivTab2.setImageResource(R.mipmap.bar_juecefenxi);
+        ivTab3.setImageResource(R.mipmap.bar_yujingleida);
+        ivTab4.setImageResource(R.mipmap.bar_shijianyuzhihui);
+    }
+
+    private void hideFragment(FragmentTransaction transaction) {
+        mYiFragment = fManager.findFragmentByTag("f1");
+        mJueFragment =  fManager.findFragmentByTag("f2");
+        mYuFragment =  fManager.findFragmentByTag("f3");
+        mShiFragment =  fManager.findFragmentByTag("f4");
+        if (mYiFragment != null) {
+            transaction.hide(mYiFragment);
+        }
+        if (mJueFragment != null) {
+            transaction.hide(mJueFragment);
+        }
+        if (mYuFragment != null) {
+            transaction.hide(mYuFragment);
+        }
+        if (mShiFragment != null) {
+            transaction.hide(mShiFragment);
+        }
+    }
+
 
     private void initTargetPopup() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -121,10 +236,8 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
 
 
     private void initContent() {
-        mDashboardFragment = new DashboardFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, mDashboardFragment, DashboardFragment.TAG)        //.addToBackStack("fname")
-                .commit();
+        fManager = getSupportFragmentManager();
+        switchTab(R.id.ll_tab1);
     }
 
 
@@ -170,6 +283,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         if (requestId == REQUEST_TYPE_TARGET_CATEGORY) handMenuCategoryData(response);
         if (requestId == REQUEST_TYPE_TARGET_TARGET) handMenuTargetData(response);
         if (requestId == REQUEST_TYPE_TARGET_SEARCH) handTargetSearch(response);
+        if (requestId == REQUEST_TYPE_TARGET_USUAL) handTargetUsual(response);
 
     }
 
@@ -196,7 +310,13 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         mcTargetSelectPopup.toggleData(mcTargetMenuItemList);
     }
 
-    @Override
+    private void handTargetUsual(Response<String> response){
+        List<McTargetMenuItem> mcTargetMenuItemList = JSON.parseArray(response.body(), McTargetMenuItem.class);
+        mcTargetSelectPopup.toggleData(mcTargetMenuItemList);
+    }
+
+
+        @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -285,7 +405,12 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
 
     @Override
     public void onClick(View v) {
-        mcTargetSelectPopupView.toggle();
-        loadUsualTarget();
+        if (v.getId() == R.id.nav_tv_usual){
+            mcTargetSelectPopupView.toggle();
+            loadUsualTarget();
+        }else {
+            switchTab(v.getId());
+        }
+
     }
 }

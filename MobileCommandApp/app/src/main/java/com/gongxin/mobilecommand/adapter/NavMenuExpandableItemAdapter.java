@@ -49,7 +49,7 @@ public class NavMenuExpandableItemAdapter extends BaseMultiItemQuickAdapter<Mult
             case TYPE_LEVEL_0:
                 final NavMenuLevel0Item lv0 = (NavMenuLevel0Item) item;
                 holder.setText(R.id.title, lv0.getName())
-                        .setImageResource(R.id.iv, lv0.isExpanded() ? R.mipmap.arrow_b : R.mipmap.arrow_r);
+                        .setImageResource(R.id.iv, lv0.isExpanded() ? R.mipmap.nav_menu_close : R.mipmap.nav_menu_expand);
                 holder.itemView.setOnClickListener(v -> {
                     int pos = holder.getAdapterPosition();
                     Log.d(TAG, "Level 0 item pos: " + pos);
@@ -66,8 +66,8 @@ public class NavMenuExpandableItemAdapter extends BaseMultiItemQuickAdapter<Mult
                 break;
             case TYPE_LEVEL_1:
                 final NavMenuLevel1Item lv1 = (NavMenuLevel1Item) item;
-                holder.setText(R.id.title, lv1.getName())
-                        .setImageResource(R.id.iv, lv1.isExpanded() ? R.mipmap.arrow_b : R.mipmap.arrow_r);
+                holder.setText(R.id.title, lv1.getName());
+                        //.setImageResource(R.id.iv, lv1.isExpanded() ? R.mipmap.arrow_b : R.mipmap.arrow_r);
                 holder.itemView.setOnClickListener(v -> {
                     int pos = holder.getAdapterPosition();
                     Log.d(TAG, "Level 1 item pos: " + pos);

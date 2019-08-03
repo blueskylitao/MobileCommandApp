@@ -32,7 +32,6 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
     private McTargetAdapter mcTargetAdapter;
 
     private OnTargetItemClickListener mOnTargetItemClickListener;
-    private TextView mTvBackLevel;
 
     public McTargetSelectPopup(@NonNull Context context) {
         super(context);
@@ -50,7 +49,7 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
         Button btnClose = findViewById(R.id.btn_close);
         btnClose.setOnClickListener(this);
 
-        mTvBackLevel = findViewById(R.id.tv_last_level);
+        TextView mTvBackLevel = findViewById(R.id.tv_last_level);
         mTvBackLevel.setOnClickListener(this);
 
         RecyclerView mRvTargetList = findViewById(R.id.popup_rv_target);
@@ -104,6 +103,7 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
     protected void onDismiss() {
         super.onDismiss();
         ids.clear();
+        mcTargetAdapter.replaceData(new ArrayList<>());
     }
 
 

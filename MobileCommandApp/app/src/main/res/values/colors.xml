@@ -15,4 +15,7 @@
     <color name="ccMenuIconColor">@color/darkone</color>
     <color name="guide_color">#0B1C35</color>
 
+    <color name="color_bar_tab_default">#999999</color>
+    <color name="color_bar_tab_selected">#2344AE</color>
+
 </resources>

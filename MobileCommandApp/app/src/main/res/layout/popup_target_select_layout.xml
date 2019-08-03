@@ -12,8 +12,10 @@
         android:layout_marginBottom="8dp">
 
         <TextView
+            android:drawableStart="@mipmap/mc_target_back"
             android:id="@+id/tv_last_level"
             android:layout_width="64dp"
+            android:paddingStart="8dp"
             android:layout_height="22.5dp"
             android:background="#3B495D"
             android:gravity="center"
