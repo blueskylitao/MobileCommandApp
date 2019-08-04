@@ -2,6 +2,8 @@ package com.gongxin.mobilecommand.domain;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
+import java.util.List;
+
 import static com.gongxin.mobilecommand.adapter.NavMenuExpandableItemAdapter.TYPE_MENU_TARGET;
 
 /**
@@ -15,6 +17,7 @@ public class McTargetMenuItem implements MultiItemEntity {
     private int parentId;//0
     private String url;
     private String path;//0-1
+    private List<McTargetMenuItem> child;
 
     public McTargetMenuItem(String name, int id, int parentId, String url, String path) {
         this.name = name;
@@ -22,6 +25,14 @@ public class McTargetMenuItem implements MultiItemEntity {
         this.parentId = parentId;
         this.url = url;
         this.path = path;
+    }
+
+    public List<McTargetMenuItem> getChild() {
+        return child;
+    }
+
+    public void setChild(List<McTargetMenuItem> child) {
+        this.child = child;
     }
 
     public McTargetMenuItem(String name) {

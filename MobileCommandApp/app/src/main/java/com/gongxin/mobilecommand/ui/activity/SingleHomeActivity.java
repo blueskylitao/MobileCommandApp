@@ -311,6 +311,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
     private void handTargetUsual(Response<String> response) {
         List<McTargetMenuItem> mcTargetMenuItemList = JSON.parseArray(response.body(), McTargetMenuItem.class);
         mcTargetSelectPopup.toggleData(mcTargetMenuItemList);
+        mcTargetSelectPopup.setTitle("常用指标");
     }
 
 
