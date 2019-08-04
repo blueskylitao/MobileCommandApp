@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.adapter.McTargetAdapter;
 import com.gongxin.mobilecommand.domain.McTargetMenuItem;
+import com.gongxin.mobilecommand.utils.ToastUtil;
 import com.lxj.xpopup.core.PositionPopupView;
 
 import java.util.ArrayList;
@@ -55,7 +56,24 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
         RecyclerView mRvTargetList = findViewById(R.id.popup_rv_target);
         mRvTargetList.setLayoutManager(new LinearLayoutManager(getContext()));
         mcTargetAdapter = new McTargetAdapter(R.layout.item_mc_target_layout,new ArrayList<>());
-        mcTargetAdapter.setOnItemClickListener(this);
+        //mcTargetAdapter.setOnItemClickListener(this);
+        mcTargetAdapter.setOnTargetItemClickListener(new McTargetAdapter.OnTargetItemClickListener() {
+            @Override
+            public void onTitleClick(McTargetMenuItem mcTargetMenuItem) {
+                ToastUtil.shortToast(getContext(),"跳转"+mcTargetMenuItem.getUrl());
+            }
+
+            @Override
+            public void onArrowClick(McTargetMenuItem mcTargetMenuItem) {
+                if (mOnTargetItemClickListener!=null){
+                    if (mcTargetMenuItem != null){
+                        setTitle(mcTargetMenuItem.getName());
+                        ids.push(mcTargetMenuItem);
+                        mOnTargetItemClickListener.onTargetItemClick(mcTargetMenuItem);
+                    }
+                }
+            }
+        });
         mRvTargetList.setAdapter(mcTargetAdapter);
 
     }
@@ -70,14 +88,7 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        if (mOnTargetItemClickListener!=null){
-            McTargetMenuItem item = (McTargetMenuItem) adapter.getItem(position);
-            if (item != null){
-                setTitle(item.getName());
-                ids.push(item);
-                mOnTargetItemClickListener.onTargetItemClick(item);
-            }
-        }
+
     }
 
     @Override
@@ -102,6 +113,7 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
     @Override
     protected void onDismiss() {
         super.onDismiss();
+        setTitle("");
         ids.clear();
         mcTargetAdapter.replaceData(new ArrayList<>());
     }
@@ -118,7 +130,7 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
         }
     }
 
-    private void setTitle(String title){
+    public void setTitle(String title){
         TextView titleView = findViewById(R.id.tv_title);
         titleView.setText(title);
     }

@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class McTargetAdapter extends BaseQuickAdapter<McTargetMenuItem, BaseViewHolder> {
 
+    private OnTargetItemClickListener onTargetItemClickListener;
     public McTargetAdapter(int layoutResId, @Nullable List<McTargetMenuItem> data) {
         super(layoutResId, data);
     }
@@ -23,5 +24,38 @@ public class McTargetAdapter extends BaseQuickAdapter<McTargetMenuItem, BaseView
     @Override
     protected void convert(@NonNull BaseViewHolder helper, McTargetMenuItem item) {
         helper.setText(R.id.title,item.getName());
+        helper.getView(R.id.title).setOnClickListener(v -> {
+            if (onTargetItemClickListener!=null) {
+                onTargetItemClickListener.onTitleClick(item);
+            }
+        });
+        if(item.getChild()!=null && item.getChild().size()>0){
+            helper.setImageResource(R.id.iv,R.mipmap.nav_menu_expand);
+            helper.getView(R.id.iv).setOnClickListener(v -> {
+                if (onTargetItemClickListener!=null) {
+                    onTargetItemClickListener.onArrowClick(item);
+                }
+            });
+        }else {
+            helper.setImageResource(R.id.iv,R.mipmap.nav_menu_arrow_right);
+            helper.getView(R.id.iv).setOnClickListener(v -> {
+                if (onTargetItemClickListener!=null) {
+                    onTargetItemClickListener.onTitleClick(item);
+                }
+            });
+        }
+
+
     }
+
+    public void setOnTargetItemClickListener(OnTargetItemClickListener onTargetItemClickListener) {
+        this.onTargetItemClickListener = onTargetItemClickListener;
+    }
+
+    public interface OnTargetItemClickListener{
+        void onTitleClick(McTargetMenuItem mcTargetMenuItem);
+        void onArrowClick(McTargetMenuItem mcTargetMenuItem);
+    }
+
+
 }
