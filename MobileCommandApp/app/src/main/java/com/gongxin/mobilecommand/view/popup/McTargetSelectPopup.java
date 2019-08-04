@@ -14,8 +14,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.adapter.McTargetAdapter;
 import com.gongxin.mobilecommand.domain.McTargetMenuItem;
+import com.gongxin.mobilecommand.domain.UrlMessageEvent;
 import com.gongxin.mobilecommand.utils.ToastUtil;
 import com.lxj.xpopup.core.PositionPopupView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,20 +59,24 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
 
         RecyclerView mRvTargetList = findViewById(R.id.popup_rv_target);
         mRvTargetList.setLayoutManager(new LinearLayoutManager(getContext()));
-        mcTargetAdapter = new McTargetAdapter(R.layout.item_mc_target_layout,new ArrayList<>());
+        mcTargetAdapter = new McTargetAdapter(R.layout.item_mc_target_layout, new ArrayList<>());
         //mcTargetAdapter.setOnItemClickListener(this);
         mcTargetAdapter.setOnTargetItemClickListener(new McTargetAdapter.OnTargetItemClickListener() {
             @Override
             public void onTitleClick(McTargetMenuItem mcTargetMenuItem) {
-                if (!TextUtils.isEmpty(mcTargetMenuItem.getUrl())){
-                    ToastUtil.shortToast(getContext(),"跳转"+mcTargetMenuItem.getUrl());
+                if (!TextUtils.isEmpty(mcTargetMenuItem.getUrl())) {
+
+                    UrlMessageEvent messageEvent = new UrlMessageEvent();
+                    messageEvent.setUrl(mcTargetMenuItem.getUrl());
+                    EventBus.getDefault().post(messageEvent);
+                    ToastUtil.showToast(getContext(), "跳转" + mcTargetMenuItem.getUrl());
                 }
             }
 
             @Override
             public void onArrowClick(McTargetMenuItem mcTargetMenuItem) {
-                if (mOnTargetItemClickListener!=null){
-                    if (mcTargetMenuItem != null){
+                if (mOnTargetItemClickListener != null) {
+                    if (mcTargetMenuItem != null) {
                         setTitle(mcTargetMenuItem.getName());
                         ids.push(mcTargetMenuItem);
                         mOnTargetItemClickListener.onTargetItemClick(mcTargetMenuItem);
@@ -81,7 +88,7 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
 
     }
 
-    public void toggleData(List<McTargetMenuItem> list){
+    public void toggleData(List<McTargetMenuItem> list) {
         mcTargetAdapter.replaceData(list);
     }
 
@@ -96,18 +103,18 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.tv_last_level){
-            if (ids.size() <= 1){
+        if (v.getId() == R.id.tv_last_level) {
+            if (ids.size() <= 1) {
                 toggle();
                 return;
             }
-            if (mOnTargetItemClickListener!=null){
+            if (mOnTargetItemClickListener != null) {
                 ids.pop();
                 McTargetMenuItem item = ids.peek();
                 setTitle(item.getName());
                 mOnTargetItemClickListener.onTargetItemClick(item);
             }
-        }else if(v.getId() == R.id.btn_close){
+        } else if (v.getId() == R.id.btn_close) {
             toggle();
         }
 
@@ -122,18 +129,18 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
     }
 
 
-    public interface OnTargetItemClickListener{
+    public interface OnTargetItemClickListener {
         void onTargetItemClick(McTargetMenuItem id);
     }
 
-    public void pushParentId(McTargetMenuItem item){
-        if (ids.isEmpty()){
+    public void pushParentId(McTargetMenuItem item) {
+        if (ids.isEmpty()) {
             ids.push(item);
             setTitle(item.getName());
         }
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         TextView titleView = findViewById(R.id.tv_title);
         titleView.setText(title);
     }

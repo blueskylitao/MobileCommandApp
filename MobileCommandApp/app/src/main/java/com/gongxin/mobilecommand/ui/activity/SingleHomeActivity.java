@@ -31,6 +31,7 @@ import com.gongxin.mobilecommand.base.BaseActivity;
 import com.gongxin.mobilecommand.domain.McTargetMenuItem;
 import com.gongxin.mobilecommand.domain.NavMenuLevel0Item;
 import com.gongxin.mobilecommand.domain.NavMenuLevel1Item;
+import com.gongxin.mobilecommand.ui.dialog.MyDialogHint;
 import com.gongxin.mobilecommand.ui.fragment.BrowserFragment;
 import com.gongxin.mobilecommand.ui.fragment.DecisionAnalysisFragment;
 import com.gongxin.mobilecommand.utils.DensityUtil;
@@ -87,6 +88,10 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
             ivTab1.setImageResource(R.mipmap.bar_yibiaopan_selected);
             if (mYiFragment == null) {
                 mYiFragment = new BrowserFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("url", "http://www.sohu.com");
+                bundle.putString("isjump", "1");
+                mYiFragment.setArguments(bundle);
                 transaction.add(R.id.container, mYiFragment, "f1");
             } else {
                 transaction.show(mYiFragment);
@@ -320,7 +325,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            new MyDialogHint(SingleHomeActivity.this, R.style.MyDialog1).show();
         }
     }
 
