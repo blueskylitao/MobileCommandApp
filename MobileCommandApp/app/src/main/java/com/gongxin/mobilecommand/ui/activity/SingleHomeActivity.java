@@ -32,7 +32,6 @@ import com.gongxin.mobilecommand.domain.McTargetMenuItem;
 import com.gongxin.mobilecommand.domain.NavMenuLevel0Item;
 import com.gongxin.mobilecommand.domain.NavMenuLevel1Item;
 import com.gongxin.mobilecommand.ui.fragment.BrowserFragment;
-import com.gongxin.mobilecommand.ui.fragment.DashboardFragment;
 import com.gongxin.mobilecommand.ui.fragment.DecisionAnalysisFragment;
 import com.gongxin.mobilecommand.utils.DensityUtil;
 import com.gongxin.mobilecommand.utils.ToastUtil;
@@ -87,7 +86,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
             ImageView ivTab1 = findViewById(R.id.iv_tab_1);
             ivTab1.setImageResource(R.mipmap.bar_yibiaopan_selected);
             if (mYiFragment == null) {
-                mYiFragment = new DashboardFragment();
+                mYiFragment = new BrowserFragment();
                 transaction.add(R.id.container, mYiFragment, "f1");
             } else {
                 transaction.show(mYiFragment);
