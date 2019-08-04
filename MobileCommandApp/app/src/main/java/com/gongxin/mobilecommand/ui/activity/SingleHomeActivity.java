@@ -33,6 +33,7 @@ import com.gongxin.mobilecommand.domain.NavMenuLevel0Item;
 import com.gongxin.mobilecommand.domain.NavMenuLevel1Item;
 import com.gongxin.mobilecommand.ui.fragment.BrowserFragment;
 import com.gongxin.mobilecommand.ui.fragment.DashboardFragment;
+import com.gongxin.mobilecommand.ui.fragment.DecisionAnalysisFragment;
 import com.gongxin.mobilecommand.utils.DensityUtil;
 import com.gongxin.mobilecommand.utils.ToastUtil;
 import com.gongxin.mobilecommand.view.popup.McTargetSelectPopup;
@@ -76,68 +77,65 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         loadDataFromServe();
     }
 
-    private void switchTab(int tabId){
+    private void switchTab(int tabId) {
         resetTab();
         FragmentTransaction transaction = fManager.beginTransaction();
         hideFragment(transaction);
-        if (tabId == R.id.ll_tab1){
+        if (tabId == R.id.ll_tab1) {
             TextView tvTab1 = findViewById(R.id.tv_tab_1);
             tvTab1.setTextColor(getResources().getColor(R.color.color_bar_tab_selected));
             ImageView ivTab1 = findViewById(R.id.iv_tab_1);
             ivTab1.setImageResource(R.mipmap.bar_yibiaopan_selected);
-            if (mYiFragment == null){
+            if (mYiFragment == null) {
                 mYiFragment = new DashboardFragment();
-                transaction.add(R.id.container,mYiFragment,"f1");
-            }else {
+                transaction.add(R.id.container, mYiFragment, "f1");
+            } else {
                 transaction.show(mYiFragment);
             }
-        }else if (tabId == R.id.ll_tab2){
+        } else if (tabId == R.id.ll_tab2) {
             TextView tvTab2 = findViewById(R.id.tv_tab_2);
             tvTab2.setTextColor(getResources().getColor(R.color.color_bar_tab_selected));
             ImageView ivTab2 = findViewById(R.id.iv_tab_2);
             ivTab2.setImageResource(R.mipmap.bar_juecefenxi_selected);
-            if (mJueFragment == null){
-                mJueFragment = new BrowserFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("url","baidu");
-                mJueFragment.setArguments(bundle);
-                transaction.add(R.id.container,mJueFragment,"f2");
-            }else {
+            if (mJueFragment == null) {
+                mJueFragment = new DecisionAnalysisFragment();
+                transaction.add(R.id.container, mJueFragment, "f2");
+            } else {
                 transaction.show(mJueFragment);
             }
-        }else if(tabId == R.id.ll_tab3){
+        } else if (tabId == R.id.ll_tab3) {
             TextView tvTab3 = findViewById(R.id.tv_tab_3);
             tvTab3.setTextColor(getResources().getColor(R.color.color_bar_tab_selected));
             ImageView ivTab3 = findViewById(R.id.iv_tab_3);
             ivTab3.setImageResource(R.mipmap.bar_yujingleida_selected);
-            if (mYuFragment == null){
+            if (mYuFragment == null) {
                 mYuFragment = new BrowserFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("url","ten");
+                bundle.putString("url", "http://www.sina.com");
                 mYuFragment.setArguments(bundle);
-                transaction.add(R.id.container,mYuFragment,"f3");
-            }else {
+                transaction.add(R.id.container, mYuFragment, "f3");
+            } else {
                 transaction.show(mYuFragment);
             }
-        }else if (tabId == R.id.ll_tab4){
+        } else if (tabId == R.id.ll_tab4) {
             TextView tvTab4 = findViewById(R.id.tv_tab_4);
             tvTab4.setTextColor(getResources().getColor(R.color.color_bar_tab_selected));
             ImageView ivTab4 = findViewById(R.id.iv_tab_4);
             ivTab4.setImageResource(R.mipmap.bar_shijianyuzhihui_selected);
-            if (mShiFragment == null){
+            if (mShiFragment == null) {
                 mShiFragment = new BrowserFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("url","ali");
+                bundle.putString("url", "https://www.baidu.com");
                 mShiFragment.setArguments(bundle);
-                transaction.add(R.id.container,mShiFragment,"f4");
-            }else {
+                transaction.add(R.id.container, mShiFragment, "f4");
+            } else {
                 transaction.show(mShiFragment);
             }
         }
         transaction.commitAllowingStateLoss();
     }
 
-    private void resetTab(){
+    private void resetTab() {
         TextView tvTab1 = findViewById(R.id.tv_tab_1);
         TextView tvTab2 = findViewById(R.id.tv_tab_2);
         TextView tvTab3 = findViewById(R.id.tv_tab_3);
@@ -163,9 +161,9 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
 
     private void hideFragment(FragmentTransaction transaction) {
         mYiFragment = fManager.findFragmentByTag("f1");
-        mJueFragment =  fManager.findFragmentByTag("f2");
-        mYuFragment =  fManager.findFragmentByTag("f3");
-        mShiFragment =  fManager.findFragmentByTag("f4");
+        mJueFragment = fManager.findFragmentByTag("f2");
+        mYuFragment = fManager.findFragmentByTag("f3");
+        mShiFragment = fManager.findFragmentByTag("f4");
         if (mYiFragment != null) {
             transaction.hide(mYiFragment);
         }
@@ -186,10 +184,10 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         mcTargetSelectPopup = new McTargetSelectPopup(context);
         mcTargetSelectPopup.setOnTargetItemClickListener(this);
-        mcTargetSelectPopupView =  new XPopup.Builder(context)
+        mcTargetSelectPopupView = new XPopup.Builder(context)
                 .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
-                .offsetY(displayMetrics.heightPixels- DensityUtil.dip2px(this,634))
-                .offsetX(findViewById(R.id.nav_view).getMeasuredWidth()+20)
+                .offsetY(displayMetrics.heightPixels - DensityUtil.dip2px(this, 634))
+                .offsetX(findViewById(R.id.nav_view).getMeasuredWidth() + 20)
                 .hasShadowBg(false)
                 .moveUpToKeyboard(false)
                 .asCustom(mcTargetSelectPopup);
@@ -197,37 +195,37 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
 
     private void loadDataFromServe() {
         showProgressDialog(getString(R.string.dialog_loading));
-        loadMenuCategoryData(0,REQUEST_TYPE_TARGET_CATEGORY);
+        loadMenuCategoryData(0, REQUEST_TYPE_TARGET_CATEGORY);
     }
 
     /**
      * 加载菜单栏指标分类数据
      */
-    private void loadMenuCategoryData(int parentId,int requestId) {
+    private void loadMenuCategoryData(int parentId, int requestId) {
 
         try {
             HttpParams httpParams = new HttpParams();
-            httpParams.put("parentId",parentId);
+            httpParams.put("parentId", parentId);
             httpRequestByGet("/command/targetTree", httpParams, requestId);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void searchTarget(String targetName){
+    private void searchTarget(String targetName) {
         try {
             HttpParams httpParams = new HttpParams();
-            httpParams.put("targetName",targetName);
+            httpParams.put("targetName", targetName);
             httpRequestByGet("/command/getTargetByName", httpParams, REQUEST_TYPE_TARGET_SEARCH);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void loadUsualTarget(){
+    private void loadUsualTarget() {
         try {
             HttpParams httpParams = new HttpParams();
-            httpParams.put("count",20);
+            httpParams.put("count", 20);
             httpRequestByGet("/command/usual", httpParams, REQUEST_TYPE_TARGET_USUAL);
         } catch (Exception e) {
             e.printStackTrace();
@@ -256,7 +254,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                if (mcTargetSelectPopupView==null){
+                if (mcTargetSelectPopupView == null) {
                     initTargetPopup();
                 }
             }
@@ -266,7 +264,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         RecyclerView navRvMenu = findViewById(R.id.nav_rv_menu);
         navRvMenu.setLayoutManager(new LinearLayoutManager(this));
         ArrayList<MultiItemEntity> list = new ArrayList<>();
-        mNavMenuExpandableItemAdapter = new NavMenuExpandableItemAdapter(list,this);
+        mNavMenuExpandableItemAdapter = new NavMenuExpandableItemAdapter(list, this);
         navRvMenu.setAdapter(mNavMenuExpandableItemAdapter);
         mNavMenuExpandableItemAdapter.setLevel1ItemClickListener(this);
 
@@ -279,7 +277,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
     @Override
     protected void onHttpRequestResult(Response<String> response, int requestId) {
         super.onHttpRequestResult(response, requestId);
-        Log.e(TAG, "onHttpRequestResult: "+response.body() );
+        Log.e(TAG, "onHttpRequestResult: " + response.body());
         if (requestId == REQUEST_TYPE_TARGET_CATEGORY) handMenuCategoryData(response);
         if (requestId == REQUEST_TYPE_TARGET_TARGET) handMenuTargetData(response);
         if (requestId == REQUEST_TYPE_TARGET_SEARCH) handTargetSearch(response);
@@ -305,18 +303,18 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         mcTargetSelectPopup.toggleData(mcTargetMenuItemList);
     }
 
-    private void handTargetSearch(Response<String> response){
+    private void handTargetSearch(Response<String> response) {
         List<McTargetMenuItem> mcTargetMenuItemList = JSON.parseArray(response.body(), McTargetMenuItem.class);
         mcTargetSelectPopup.toggleData(mcTargetMenuItemList);
     }
 
-    private void handTargetUsual(Response<String> response){
+    private void handTargetUsual(Response<String> response) {
         List<McTargetMenuItem> mcTargetMenuItemList = JSON.parseArray(response.body(), McTargetMenuItem.class);
         mcTargetSelectPopup.toggleData(mcTargetMenuItemList);
     }
 
 
-        @Override
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -348,8 +346,6 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
     }
 
 
-
-
     @Override
     protected void loadViewLayout() {
 
@@ -377,38 +373,38 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         mcTargetMenuItem.setId(item.getId());
         mcTargetSelectPopup.pushParentId(mcTargetMenuItem);
         mcTargetSelectPopupView.toggle();
-        loadMenuCategoryData(item.getId(),REQUEST_TYPE_TARGET_TARGET);
+        loadMenuCategoryData(item.getId(), REQUEST_TYPE_TARGET_TARGET);
     }
 
     @Override
     public void onTargetItemClick(McTargetMenuItem item) {
-        loadMenuCategoryData(item.getId(),REQUEST_TYPE_TARGET_TARGET);
+        loadMenuCategoryData(item.getId(), REQUEST_TYPE_TARGET_TARGET);
     }
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-            if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN){
-                KeyboardUtils.hideSoftInput(v);
-                String targetName = mNavEtSearch.getText().toString();
-                if (TextUtils.isEmpty(targetName)){
-                    ToastUtil.shortToast(this,"请输入指标名称");
-                    return false;
-                }
-                mcTargetSelectPopupView.toggle();
-                searchTarget(targetName);
-                return true;
+        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+            KeyboardUtils.hideSoftInput(v);
+            String targetName = mNavEtSearch.getText().toString();
+            if (TextUtils.isEmpty(targetName)) {
+                ToastUtil.shortToast(this, "请输入指标名称");
+                return false;
             }
-            return false;
+            mcTargetSelectPopupView.toggle();
+            searchTarget(targetName);
+            return true;
+        }
+        return false;
 
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.nav_tv_usual){
+        if (v.getId() == R.id.nav_tv_usual) {
             mcTargetSelectPopupView.toggle();
             loadUsualTarget();
-        }else {
+        } else {
             switchTab(v.getId());
         }
 

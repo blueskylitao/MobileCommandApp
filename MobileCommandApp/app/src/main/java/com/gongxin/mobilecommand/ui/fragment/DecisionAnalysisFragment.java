@@ -9,15 +9,15 @@ import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.base.BaseFragment;
 
 /**
- * 首页仪表盘页面
+ * 决策分析页面
  */
-public class DashboardFragment extends BaseFragment {
+public class DecisionAnalysisFragment extends BaseFragment {
 
-    public static String TAG = DashboardFragment.class.getSimpleName();
+    public static String TAG = DecisionAnalysisFragment.class.getSimpleName();
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
-        View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_decision_analysis, container, false);
         return rootView;
     }
 
