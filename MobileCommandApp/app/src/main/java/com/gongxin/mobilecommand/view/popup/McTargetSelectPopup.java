@@ -1,6 +1,7 @@
 package com.gongxin.mobilecommand.view.popup;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -60,7 +61,9 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
         mcTargetAdapter.setOnTargetItemClickListener(new McTargetAdapter.OnTargetItemClickListener() {
             @Override
             public void onTitleClick(McTargetMenuItem mcTargetMenuItem) {
-                ToastUtil.shortToast(getContext(),"跳转"+mcTargetMenuItem.getUrl());
+                if (!TextUtils.isEmpty(mcTargetMenuItem.getUrl())){
+                    ToastUtil.shortToast(getContext(),"跳转"+mcTargetMenuItem.getUrl());
+                }
             }
 
             @Override
