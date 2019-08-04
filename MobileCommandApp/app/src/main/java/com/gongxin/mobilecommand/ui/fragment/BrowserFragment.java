@@ -20,10 +20,17 @@ import android.widget.ProgressBar;
 
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.base.BaseFragment;
+import com.gongxin.mobilecommand.domain.UrlMessageEvent;
 import com.gongxin.mobilecommand.ui.activity.PublicWebviewActivity;
+import com.gongxin.mobilecommand.utils.HttpUtil;
 import com.gongxin.mobilecommand.utils.SPUtil;
 import com.gongxin.mobilecommand.utils.ToastUtil;
+import com.gongxin.mobilecommand.utils.Utils;
 import com.gyf.immersionbar.ImmersionBar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 
@@ -38,7 +45,7 @@ public class BrowserFragment extends BaseFragment {
     @BindView(R.id.pb_progress)
     ProgressBar pb_progress;
     String dataUrl = "";
-    int i = 0;
+    String isJump = "0";
     String token;
 
     @Override
@@ -47,12 +54,14 @@ public class BrowserFragment extends BaseFragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             dataUrl = bundle.getString("url");
+            isJump = bundle.getString("isjump");
         }
         return rootView;
     }
 
     @Override
     protected void initListener() {
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -223,5 +232,14 @@ public class BrowserFragment extends BaseFragment {
                 .statusBarColor(R.color.white)
                 .statusBarDarkFont(true, 0.2f)
                 .init();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(UrlMessageEvent messageEvent) {
+
+        String url = messageEvent.getUrl();
+        if (!Utils.isNullOrEmpty(url) && "1".equals(isJump)) {
+            webview_detail.loadUrl(HttpUtil.BASEURL + url);
+        }
     }
 }
