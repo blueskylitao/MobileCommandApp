@@ -239,7 +239,7 @@ public class BrowserFragment extends BaseFragment {
 
         String url = messageEvent.getUrl();
         if (!Utils.isNullOrEmpty(url) && "1".equals(isJump)) {
-            webview_detail.loadUrl(HttpUtil.BASEURL + url);
+            webview_detail.loadUrl(HttpUtil.UE_BASE_URL + url);
         }
     }
 }
