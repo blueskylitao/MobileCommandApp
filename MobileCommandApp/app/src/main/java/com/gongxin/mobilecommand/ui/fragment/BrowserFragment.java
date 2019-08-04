@@ -16,7 +16,9 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.base.BaseFragment;
@@ -44,6 +46,8 @@ public class BrowserFragment extends BaseFragment {
     WebView webview_detail;
     @BindView(R.id.pb_progress)
     ProgressBar pb_progress;
+    @BindView(R.id.ll_line_web)
+    LinearLayout mLlline;
     String dataUrl = "";
     String isJump = "0";
     String token;
@@ -143,6 +147,11 @@ public class BrowserFragment extends BaseFragment {
                 pb_progress.setProgress(position);
                 if (position == 100) {
                     pb_progress.setVisibility(View.GONE);
+                    if ("1".equals(isJump)) {
+                        mLlline.setVisibility(View.VISIBLE);
+                    } else {
+                        mLlline.setVisibility(View.GONE);
+                    }
                 }
                 super.onProgressChanged(view, position);
             }

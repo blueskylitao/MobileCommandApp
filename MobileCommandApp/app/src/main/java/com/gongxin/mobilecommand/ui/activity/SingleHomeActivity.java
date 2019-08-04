@@ -24,6 +24,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.adapter.NavMenuExpandableItemAdapter;
@@ -54,6 +56,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
     private static final int REQUEST_TYPE_TARGET_TARGET = 2;
     private static final int REQUEST_TYPE_TARGET_SEARCH = 3;
     private static final int REQUEST_TYPE_TARGET_USUAL = 4;
+    private static final int REQUEST_TYPE_HOME_LINK = 5;
 
     private FragmentManager fManager;
     private Fragment mYiFragment;//仪表盘
@@ -67,13 +70,15 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
 
     private BasePopupView mcTargetSelectPopupView;
     private EditText mNavEtSearch;
+    private String url1, url2, url3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_home);
         initActionBarAndNavView();
-        initContent();
+        requestGetLink();
+        //  initContent();
         loadDataFromServe();
     }
 
@@ -89,7 +94,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
             if (mYiFragment == null) {
                 mYiFragment = new BrowserFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("url", "http://www.sohu.com");
+                bundle.putString("url", "http://47.104.161.130:8080/" + url1);
                 bundle.putString("isjump", "1");
                 mYiFragment.setArguments(bundle);
                 transaction.add(R.id.container, mYiFragment, "f1");
@@ -115,7 +120,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
             if (mYuFragment == null) {
                 mYuFragment = new BrowserFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("url", "http://www.sina.com");
+                bundle.putString("url", "http://47.104.161.130:8080/" + url2);
                 mYuFragment.setArguments(bundle);
                 transaction.add(R.id.container, mYuFragment, "f3");
             } else {
@@ -129,7 +134,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
             if (mShiFragment == null) {
                 mShiFragment = new BrowserFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("url", "https://www.baidu.com");
+                bundle.putString("url", "http://47.104.161.130:8080/" + url3);
                 mShiFragment.setArguments(bundle);
                 transaction.add(R.id.container, mShiFragment, "f4");
             } else {
@@ -236,6 +241,14 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         }
     }
 
+    private void requestGetLink() {
+        try {
+            HttpParams httpParams = new HttpParams();
+            httpRequestByGet("/command/linked/guideLink", httpParams, REQUEST_TYPE_HOME_LINK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void initContent() {
         fManager = getSupportFragmentManager();
@@ -286,12 +299,27 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         if (requestId == REQUEST_TYPE_TARGET_TARGET) handMenuTargetData(response);
         if (requestId == REQUEST_TYPE_TARGET_SEARCH) handTargetSearch(response);
         if (requestId == REQUEST_TYPE_TARGET_USUAL) handTargetUsual(response);
-
+        if (requestId == REQUEST_TYPE_HOME_LINK) handTargetHomeLink(response);
     }
 
     @Override
     protected void onHttpRequestErr(Response<String> response, int requestId) {
         super.onHttpRequestErr(response, requestId);
+    }
+
+    private void handTargetHomeLink(Response<String> response) {
+        //{"code":200,"msg":"成功","data":[{"type":"1","url"
+        // :"analystrunner/project/d25a29fc-e498-4024-81fa-5f362acb406a/#/708cc95c-da70-43ed-a0c7-c849ca30656c"}
+        // ,{"type":"3","url":""},{"type":"4","url":""}]}
+        JSONObject jsonObject = JSON.parseObject(response.body());
+        JSONArray data = jsonObject.getJSONArray("data");
+        JSONObject o1 = (JSONObject) data.get(0);
+        url1 = (String) o1.get("url");
+        Object o2 = data.get(1);
+        url2 = (String) o1.get("url");
+        Object o3 = data.get(2);
+        url3 = (String) o1.get("url");
+        initContent();
     }
 
     private void handMenuCategoryData(Response<String> response) {
