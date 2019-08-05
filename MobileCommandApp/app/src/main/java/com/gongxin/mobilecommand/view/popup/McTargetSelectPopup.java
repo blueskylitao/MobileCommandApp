@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.adapter.McTargetAdapter;
+import com.gongxin.mobilecommand.domain.CloseDrawerLayoutEvent;
 import com.gongxin.mobilecommand.domain.McTargetMenuItem;
 import com.gongxin.mobilecommand.domain.UrlMessageEvent;
 import com.gongxin.mobilecommand.utils.ToastUtil;
@@ -64,12 +65,13 @@ public class McTargetSelectPopup extends PositionPopupView implements BaseQuickA
         mcTargetAdapter.setOnTargetItemClickListener(new McTargetAdapter.OnTargetItemClickListener() {
             @Override
             public void onTitleClick(McTargetMenuItem mcTargetMenuItem) {
+                ToastUtil.shortToast(getContext(),mcTargetMenuItem.getName()+"被点击了");
                 if (!TextUtils.isEmpty(mcTargetMenuItem.getUrl())) {
-
                     UrlMessageEvent messageEvent = new UrlMessageEvent();
                     messageEvent.setUrl(mcTargetMenuItem.getUrl());
                     EventBus.getDefault().post(messageEvent);
-                    ToastUtil.showToast(getContext(), "跳转" + mcTargetMenuItem.getUrl());
+                    toggle();
+                    EventBus.getDefault().post(new CloseDrawerLayoutEvent());
                 }
             }
 

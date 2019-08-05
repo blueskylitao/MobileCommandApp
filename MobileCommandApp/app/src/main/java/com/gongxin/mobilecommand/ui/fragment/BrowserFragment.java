@@ -41,6 +41,7 @@ import butterknife.BindView;
 
 public class BrowserFragment extends BaseFragment {
 
+    private final String TAG = BrowserFragment.class.getSimpleName();
     @BindView(R.id.webview_detail)
     WebView webview_detail;
     @BindView(R.id.pb_progress)
@@ -247,7 +248,9 @@ public class BrowserFragment extends BaseFragment {
 
         String url = messageEvent.getUrl();
         if (!Utils.isNullOrEmpty(url) && "1".equals(isJump)) {
-            webview_detail.loadUrl(HttpUtil.checkUeUrl(url));
+            String ueUrl = HttpUtil.checkUeUrl(url);
+            Log.e(TAG, "Event: "+ueUrl);
+            webview_detail.loadUrl(ueUrl);
         }
     }
 }

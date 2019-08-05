@@ -31,6 +31,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.adapter.NavMenuExpandableItemAdapter;
 import com.gongxin.mobilecommand.base.BaseActivity;
+import com.gongxin.mobilecommand.domain.CloseDrawerLayoutEvent;
 import com.gongxin.mobilecommand.domain.McTargetMenuItem;
 import com.gongxin.mobilecommand.domain.NavMenuLevel0Item;
 import com.gongxin.mobilecommand.domain.NavMenuLevel1Item;
@@ -47,6 +48,10 @@ import com.lxj.xpopup.enums.PopupAnimation;
 import com.lxj.xpopup.util.KeyboardUtils;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -395,7 +400,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
 
     @Override
     protected void setListener() {
-
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -445,5 +450,10 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
             switchTab(v.getId());
         }
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(CloseDrawerLayoutEvent messageEvent) {
+       onBackPressed();
     }
 }
