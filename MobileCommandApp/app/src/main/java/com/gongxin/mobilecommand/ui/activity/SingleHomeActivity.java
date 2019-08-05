@@ -30,7 +30,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.adapter.NavMenuExpandableItemAdapter;
-import com.gongxin.mobilecommand.base.BaseActivity;
+import com.gongxin.mobilecommand.base.PadBaseActivity;
 import com.gongxin.mobilecommand.domain.CloseDrawerLayoutEvent;
 import com.gongxin.mobilecommand.domain.McTargetMenuItem;
 import com.gongxin.mobilecommand.domain.NavMenuLevel0Item;
@@ -56,7 +56,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SingleHomeActivity extends BaseActivity implements NavMenuExpandableItemAdapter.OnLevel1ItemClickListener, McTargetSelectPopup.OnTargetItemClickListener, View.OnKeyListener, View.OnClickListener {
+public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpandableItemAdapter.OnLevel1ItemClickListener, McTargetSelectPopup.OnTargetItemClickListener, View.OnKeyListener, View.OnClickListener {
 
     private static final String TAG = SingleHomeActivity.class.getSimpleName();
     private static final int REQUEST_TYPE_TARGET_CATEGORY = 1;
@@ -85,6 +85,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         setContentView(R.layout.activity_single_home);
         initActionBarAndNavView();
         requestGetLink();
+        fManager = getSupportFragmentManager();
         //  initContent();
         loadDataFromServe();
     }
@@ -127,7 +128,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
             if (mYuFragment == null) {
                 mYuFragment = new BrowserFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("url",  HttpUtil.checkUeUrl(url2));
+                bundle.putString("url", HttpUtil.checkUeUrl(url2));
                 mYuFragment.setArguments(bundle);
                 transaction.add(R.id.container, mYuFragment, "f3");
             } else {
@@ -141,7 +142,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
             if (mShiFragment == null) {
                 mShiFragment = new BrowserFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("url",  HttpUtil.checkUeUrl(url3));
+                bundle.putString("url", HttpUtil.checkUeUrl(url3));
                 mShiFragment.setArguments(bundle);
                 transaction.add(R.id.container, mShiFragment, "f4");
             } else {
@@ -258,7 +259,6 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
     }
 
     private void initContent() {
-        fManager = getSupportFragmentManager();
         switchTab(R.id.ll_tab1);
     }
 
@@ -322,10 +322,10 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
         JSONArray data = jsonObject.getJSONArray("data");
         JSONObject o1 = (JSONObject) data.get(0);
         url1 = (String) o1.get("url");
-        Object o2 = data.get(1);
-        url2 = (String) o1.get("url");
-        Object o3 = data.get(2);
-        url3 = (String) o1.get("url");
+        JSONObject o2 = (JSONObject) data.get(1);
+        url2 = (String) o2.get("url");
+        JSONObject o3 = (JSONObject) data.get(2);
+        url3 = (String) o3.get("url");
         initContent();
     }
 
@@ -454,6 +454,6 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(CloseDrawerLayoutEvent messageEvent) {
-       onBackPressed();
+        onBackPressed();
     }
 }

@@ -7,11 +7,12 @@ import android.view.ViewGroup;
 
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.base.BaseFragment;
+import com.gongxin.mobilecommand.base.PadBaseFragment;
 
 /**
  * 决策分析页面
  */
-public class DecisionAnalysisFragment extends BaseFragment {
+public class DecisionAnalysisFragment extends PadBaseFragment {
 
     public static String TAG = DecisionAnalysisFragment.class.getSimpleName();
 

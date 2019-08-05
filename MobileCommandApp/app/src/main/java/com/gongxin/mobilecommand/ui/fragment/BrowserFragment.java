@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.gongxin.mobilecommand.R;
-import com.gongxin.mobilecommand.base.BaseFragment;
+import com.gongxin.mobilecommand.base.PadBaseFragment;
 import com.gongxin.mobilecommand.domain.UrlMessageEvent;
 import com.gongxin.mobilecommand.ui.activity.PublicWebviewActivity;
 import com.gongxin.mobilecommand.utils.HttpUtil;
@@ -40,7 +40,7 @@ import butterknife.BindView;
  * author:geekLi
  */
 
-public class BrowserFragment extends BaseFragment {
+public class BrowserFragment extends PadBaseFragment {
 
     private final String TAG = BrowserFragment.class.getSimpleName();
     @BindView(R.id.webview_detail)
@@ -257,7 +257,7 @@ public class BrowserFragment extends BaseFragment {
         String url = messageEvent.getUrl();
         if (!Utils.isNullOrEmpty(url) && "1".equals(isJump)) {
             String ueUrl = HttpUtil.checkUeUrl(url);
-            Log.e(TAG, "Event: "+ueUrl);
+            Log.e(TAG, "Event: " + ueUrl);
             webview_detail.loadUrl(ueUrl);
         }
     }
