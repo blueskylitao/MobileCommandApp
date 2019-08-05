@@ -38,6 +38,7 @@ import com.gongxin.mobilecommand.ui.dialog.MyDialogHint;
 import com.gongxin.mobilecommand.ui.fragment.BrowserFragment;
 import com.gongxin.mobilecommand.ui.fragment.DecisionAnalysisFragment;
 import com.gongxin.mobilecommand.utils.DensityUtil;
+import com.gongxin.mobilecommand.utils.HttpUtil;
 import com.gongxin.mobilecommand.utils.ToastUtil;
 import com.gongxin.mobilecommand.view.popup.McTargetSelectPopup;
 import com.lxj.xpopup.XPopup;
@@ -95,7 +96,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
             if (mYiFragment == null) {
                 mYiFragment = new BrowserFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("url", "http://47.104.161.130:8080/" + url1);
+                bundle.putString("url", HttpUtil.checkUeUrl(url1));
                 bundle.putString("isjump", "1");
                 mYiFragment.setArguments(bundle);
                 transaction.add(R.id.container, mYiFragment, "f1");
@@ -121,7 +122,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
             if (mYuFragment == null) {
                 mYuFragment = new BrowserFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("url", "http://47.104.161.130:8080/" + url2);
+                bundle.putString("url",  HttpUtil.checkUeUrl(url2));
                 mYuFragment.setArguments(bundle);
                 transaction.add(R.id.container, mYuFragment, "f3");
             } else {
@@ -135,7 +136,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
             if (mShiFragment == null) {
                 mShiFragment = new BrowserFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("url", "http://47.104.161.130:8080/" + url3);
+                bundle.putString("url",  HttpUtil.checkUeUrl(url3));
                 mShiFragment.setArguments(bundle);
                 transaction.add(R.id.container, mShiFragment, "f4");
             } else {

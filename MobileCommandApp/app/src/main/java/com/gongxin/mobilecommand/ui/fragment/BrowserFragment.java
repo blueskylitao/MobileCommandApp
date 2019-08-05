@@ -18,9 +18,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
-import com.bumptech.glide.load.model.UrlUriLoader;
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.base.BaseFragment;
 import com.gongxin.mobilecommand.domain.UrlMessageEvent;
@@ -84,7 +82,7 @@ public class BrowserFragment extends BaseFragment {
     private void initWebView() {
         webview_detail.setHorizontalScrollBarEnabled(false);
         webview_detail.setVerticalScrollBarEnabled(false);
-        webview_detail.setScrollBarStyle(0);
+        //webview_detail.setScrollBarStyle(0);
         webview_detail.setLayerType(View.LAYER_TYPE_HARDWARE, null);//开启硬件加速
 
         WebSettings settings = webview_detail.getSettings();
@@ -249,11 +247,7 @@ public class BrowserFragment extends BaseFragment {
 
         String url = messageEvent.getUrl();
         if (!Utils.isNullOrEmpty(url) && "1".equals(isJump)) {
-            if (!url.startsWith("http://") && !url.startsWith("https://")){
-                webview_detail.loadUrl(HttpUtil.UE_BASE_URL + url);
-            }else {
-                webview_detail.loadUrl(url);
-            }
+            webview_detail.loadUrl(HttpUtil.checkUeUrl(url));
         }
     }
 }

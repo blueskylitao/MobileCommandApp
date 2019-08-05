@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Context context = this;
     protected Activity activity = this;
     protected ProgressDialog pDialog;
+    private String TAG = BaseActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +120,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void httpRequestByPostFinal(String url, HttpHeaders header, JSONObject params, final int requestId) {
 
 
-        OkGo.<String>post(HttpUtil.BASEURL + url)
+        String finalUrl = HttpUtil.BASEURL + url;
+        Log.e(TAG, finalUrl );
+        OkGo.<String>post(finalUrl)
                 .tag(this)
                 .headers(header)
                 .upJson(JSON.toJSONString(params))
@@ -163,7 +167,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void httpRequestByGetFinal(String url, HttpHeaders header, HttpParams params, final int requestId) {
 
 
-        OkGo.<String>get(HttpUtil.BASEURL + url)
+        String finalUrl = HttpUtil.BASEURL + url;
+        Log.e(TAG, finalUrl );
+        OkGo.<String>get(finalUrl)
                 .tag(this)
                 .headers(header)
                 .params(params)
