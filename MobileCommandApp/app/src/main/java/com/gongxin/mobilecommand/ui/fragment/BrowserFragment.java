@@ -69,9 +69,10 @@ public class BrowserFragment extends BaseFragment {
     @Override
     protected void initListener() {
         EventBus.getDefault().register(this);
+        mRefreshLayout.setEnableLoadMore(false);
         mRefreshLayout.setOnRefreshListener(refreshlayout -> {
             webview_detail.reload();
-            refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+            refreshlayout.finishRefresh(1500/*,false*/);//传入false表示刷新失败
         });
     }
 
