@@ -53,8 +53,8 @@ dependencies {
     //recyclerView适配器
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47'
     //1.1.0 androidx 版本
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-11'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-11'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-15'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-15'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     /* implementation 'cn.yipianfengye.android:zxing-library:2.2'*/
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'

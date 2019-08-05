@@ -28,6 +28,7 @@ import com.gongxin.mobilecommand.utils.SPUtil;
 import com.gongxin.mobilecommand.utils.ToastUtil;
 import com.gongxin.mobilecommand.utils.Utils;
 import com.gyf.immersionbar.ImmersionBar;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -48,6 +49,8 @@ public class BrowserFragment extends BaseFragment {
     ProgressBar pb_progress;
     @BindView(R.id.ll_line_web)
     LinearLayout mLlline;
+    @BindView(R.id.refreshLayout)
+    RefreshLayout mRefreshLayout;
     String dataUrl = "";
     String isJump = "0";
     String token;
@@ -66,6 +69,10 @@ public class BrowserFragment extends BaseFragment {
     @Override
     protected void initListener() {
         EventBus.getDefault().register(this);
+        mRefreshLayout.setOnRefreshListener(refreshlayout -> {
+            webview_detail.reload();
+            refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+        });
     }
 
     @Override
