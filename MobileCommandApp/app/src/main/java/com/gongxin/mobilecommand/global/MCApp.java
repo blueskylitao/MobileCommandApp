@@ -51,6 +51,10 @@ public class MCApp extends MultiDexApplication {
         if (!Utils.isNullOrEmpty(ipaddress)) {
             HttpUtil.BASEURL = ipaddress;
         }
+        String ueipaddress = (String) SPUtil.get(getContext(), "ueipaddress", "");
+        if (!Utils.isNullOrEmpty(ueipaddress)) {
+            HttpUtil.UE_BASE_URL = ueipaddress;
+        }
     }
 
     private void initChatModel() {

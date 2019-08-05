@@ -14,7 +14,7 @@ import com.gongxin.mobilecommand.utils.ToastUtil;
 
 import butterknife.BindView;
 
-public class SetIpAddressActivity extends BaseActivity {
+public class SetIpAddressActivity extends BaseActivity implements View.OnClickListener {
 
 
     @BindView(R.id.login_btn_back)
@@ -26,6 +26,11 @@ public class SetIpAddressActivity extends BaseActivity {
     @BindView(R.id.tv_set)
     TextView mTvSet;
 
+    @BindView(R.id.et_setueip)
+    EditText mEtSetUeip;
+    @BindView(R.id.tv_set_ue)
+    TextView mTvUESet;
+
 
     @Override
     protected void loadViewLayout() {
@@ -36,6 +41,7 @@ public class SetIpAddressActivity extends BaseActivity {
     protected void findViewById() {
         mTvTitle.setText("设置地址");
         mEtSetip.setText(HttpUtil.BASEURL);
+        mEtSetUeip.setText(HttpUtil.UE_BASE_URL);
     }
 
     @Override
@@ -46,23 +52,35 @@ public class SetIpAddressActivity extends BaseActivity {
                 finish();
             }
         });
-        mTvSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (TextUtils.isEmpty(mEtSetip.getText().toString().trim())) {
-                    ToastUtil.shortToast(context, "地址不能为空！");
-                    return;
-                }
-                HttpUtil.BASEURL = mEtSetip.getText().toString().trim();
-                SPUtil.put(context, "ipaddress", mEtSetip.getText().toString().trim());
-                ToastUtil.showToast(context, "修改成功");
-            }
-        });
+        mTvSet.setOnClickListener(this);
+        mTvUESet.setOnClickListener(this);
     }
 
     @Override
     protected void processLogic() {
 
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.tv_set){
+            if (TextUtils.isEmpty(mEtSetip.getText().toString().trim())) {
+                ToastUtil.shortToast(context, "地址不能为空！");
+                return;
+            }
+            HttpUtil.BASEURL = mEtSetip.getText().toString().trim();
+            SPUtil.put(context, "ipaddress", mEtSetip.getText().toString().trim());
+            ToastUtil.showToast(context, "修改成功");
+        }else if (view.getId() == R.id.tv_set_ue){
+            if (TextUtils.isEmpty(mEtSetUeip.getText().toString().trim())) {
+                ToastUtil.shortToast(context, "地址不能为空！");
+                return;
+            }
+            HttpUtil.UE_BASE_URL = mEtSetUeip.getText().toString().trim();
+            SPUtil.put(context, "ueipaddress", mEtSetUeip.getText().toString().trim());
+            ToastUtil.showToast(context, "修改成功");
+        }
 
     }
 }

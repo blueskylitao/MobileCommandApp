@@ -1,5 +1,6 @@
 package com.gongxin.mobilecommand.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -373,6 +374,8 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SetIpAddressActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);

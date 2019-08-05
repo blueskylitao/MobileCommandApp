@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.load.model.UrlUriLoader;
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.base.BaseFragment;
 import com.gongxin.mobilecommand.domain.UrlMessageEvent;
@@ -248,7 +249,11 @@ public class BrowserFragment extends BaseFragment {
 
         String url = messageEvent.getUrl();
         if (!Utils.isNullOrEmpty(url) && "1".equals(isJump)) {
-            webview_detail.loadUrl(HttpUtil.UE_BASE_URL + url);
+            if (!url.startsWith("http://") && !url.startsWith("https://")){
+                webview_detail.loadUrl(HttpUtil.UE_BASE_URL + url);
+            }else {
+                webview_detail.loadUrl(url);
+            }
         }
     }
 }
