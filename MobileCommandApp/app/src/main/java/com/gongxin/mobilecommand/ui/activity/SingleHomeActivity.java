@@ -78,6 +78,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
     private BasePopupView mcTargetSelectPopupView;
     private EditText mNavEtSearch;
     private String url1, url2, url3;
+    private int currentTab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +150,7 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
             }
         }
         transaction.commitAllowingStateLoss();
+        currentTab = tabId;
     }
 
     private void resetTab() {
@@ -410,12 +412,16 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
 
     @Override
     public void onLevel1ItemClick(NavMenuLevel1Item item) {
-        McTargetMenuItem mcTargetMenuItem = new McTargetMenuItem();
-        mcTargetMenuItem.setName(item.getName());
-        mcTargetMenuItem.setId(item.getId());
-        mcTargetSelectPopup.pushParentId(mcTargetMenuItem);
-        mcTargetSelectPopupView.toggle();
-        loadMenuCategoryData(item.getId(), REQUEST_TYPE_TARGET_TARGET);
+        if (currentTab == R.id.ll_tab1){
+            McTargetMenuItem mcTargetMenuItem = new McTargetMenuItem();
+            mcTargetMenuItem.setName(item.getName());
+            mcTargetMenuItem.setId(item.getId());
+            mcTargetSelectPopup.pushParentId(mcTargetMenuItem);
+            mcTargetSelectPopupView.toggle();
+            loadMenuCategoryData(item.getId(), REQUEST_TYPE_TARGET_TARGET);
+        }else if (currentTab == R.id.ll_tab2){
+            ToastUtil.shortToast(this,"你选择了："+item.getName()+"专题分类");
+        }
     }
 
     @Override
@@ -425,16 +431,22 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
-
+        String targetName = mNavEtSearch.getText().toString();
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-            KeyboardUtils.hideSoftInput(v);
-            String targetName = mNavEtSearch.getText().toString();
-            if (TextUtils.isEmpty(targetName)) {
-                ToastUtil.shortToast(this, "请输入指标名称");
-                return false;
+
+            if (currentTab == R.id.ll_tab1){
+                KeyboardUtils.hideSoftInput(v);
+
+                if (TextUtils.isEmpty(targetName)) {
+                    ToastUtil.shortToast(this, "请输入指标名称");
+                    return false;
+                }
+                mcTargetSelectPopupView.toggle();
+                searchTarget(targetName);
+            }else if (currentTab == R.id.ll_tab2){
+               ToastUtil.shortToast(this,"搜索："+targetName);
             }
-            mcTargetSelectPopupView.toggle();
-            searchTarget(targetName);
+
             return true;
         }
         return false;
@@ -444,8 +456,13 @@ public class SingleHomeActivity extends BaseActivity implements NavMenuExpandabl
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.nav_tv_usual) {
-            mcTargetSelectPopupView.toggle();
-            loadUsualTarget();
+            if (currentTab == R.id.ll_tab1){
+                mcTargetSelectPopupView.toggle();
+                loadUsualTarget();
+            }else if (currentTab == R.id.ll_tab2){
+                ToastUtil.shortToast(this,"常用专题");
+            }
+
         } else {
             switchTab(v.getId());
         }
