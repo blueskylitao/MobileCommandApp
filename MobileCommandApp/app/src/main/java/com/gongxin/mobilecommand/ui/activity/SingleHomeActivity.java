@@ -88,7 +88,6 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
         requestGetLink();
         fManager = getSupportFragmentManager();
         //  initContent();
-        loadDataFromServe();
     }
 
     private void switchTab(int tabId) {
@@ -154,6 +153,16 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
         }
         transaction.commitAllowingStateLoss();
         currentTab = tabId;
+        loadMenuData();
+    }
+
+    private void loadMenuData() {
+        showProgressDialog(getString(R.string.dialog_loading));
+        if (currentTab == R.id.ll_tab1){
+            loadMenuCategoryData(0, REQUEST_TYPE_TARGET_CATEGORY,"/command/targetTree");
+        }else if (currentTab == R.id.ll_tab2){
+            loadMenuCategoryData(0, REQUEST_TYPE_TARGET_CATEGORY,"/command/subject/subjectTree");
+        }
     }
 
     private void resetTab() {
@@ -214,20 +223,16 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
                 .asCustom(mcTargetSelectPopup);
     }
 
-    private void loadDataFromServe() {
-        showProgressDialog(getString(R.string.dialog_loading));
-        loadMenuCategoryData(0, REQUEST_TYPE_TARGET_CATEGORY);
-    }
 
     /**
      * 加载菜单栏指标分类数据
      */
-    private void loadMenuCategoryData(int parentId, int requestId) {
+    private void loadMenuCategoryData(int parentId, int requestId,String url) {
 
         try {
             HttpParams httpParams = new HttpParams();
             httpParams.put("parentId", parentId);
-            httpRequestByGet("/command/targetTree", httpParams, requestId);
+            httpRequestByGet(url, httpParams, requestId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -338,7 +343,7 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
         for (NavMenuLevel0Item navMenuLevel0Item : navMenuLevel0Items) {
             navMenuLevel0Item.setSubItems(navMenuLevel0Item.getChild());
         }
-        mNavMenuExpandableItemAdapter.addData(navMenuLevel0Items);
+        mNavMenuExpandableItemAdapter.replaceData(navMenuLevel0Items);
     }
 
     private void handMenuTargetData(Response<String> response) {
@@ -420,7 +425,7 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
             mcTargetMenuItem.setId(item.getId());
             mcTargetSelectPopup.pushParentId(mcTargetMenuItem);
             mcTargetSelectPopupView.toggle();
-            loadMenuCategoryData(item.getId(), REQUEST_TYPE_TARGET_TARGET);
+            loadMenuCategoryData(item.getId(), REQUEST_TYPE_TARGET_TARGET,"/command/targetTree");
         }else if (currentTab == R.id.ll_tab2){
             ToastUtil.shortToast(this,"你选择了："+item.getName()+"专题分类");
         }
@@ -428,7 +433,7 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
 
     @Override
     public void onTargetItemClick(McTargetMenuItem item) {
-        loadMenuCategoryData(item.getId(), REQUEST_TYPE_TARGET_TARGET);
+        loadMenuCategoryData(item.getId(), REQUEST_TYPE_TARGET_TARGET,"/command/targetTree");
     }
 
     @Override
