@@ -7,11 +7,12 @@ import android.view.ViewGroup;
 
 import com.gongxin.mobilecommand.R;
 import com.gongxin.mobilecommand.base.BaseFragment;
+import com.gongxin.mobilecommand.base.PadBaseFragment;
 
 /**
  * 首页仪表盘页面
  */
-public class DashboardFragment extends BaseFragment {
+public class DashboardFragment extends PadBaseFragment {
 
     public static String TAG = DashboardFragment.class.getSimpleName();
 

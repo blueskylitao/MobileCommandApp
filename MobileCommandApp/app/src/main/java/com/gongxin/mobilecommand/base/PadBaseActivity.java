@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -38,11 +38,11 @@ import java.util.Map;
 import butterknife.ButterKnife;
 
 
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class PadBaseActivity extends AppCompatActivity {
     protected Context context = this;
     protected Activity activity = this;
     protected ProgressDialog pDialog;
-    private String TAG = BaseActivity.class.getSimpleName();
+    private String TAG = PadBaseActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
