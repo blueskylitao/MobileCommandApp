@@ -16,6 +16,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -28,7 +29,6 @@ import com.gongxin.mobilecommand.utils.SPUtil;
 import com.gongxin.mobilecommand.utils.ToastUtil;
 import com.gongxin.mobilecommand.utils.Utils;
 import com.gyf.immersionbar.ImmersionBar;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,8 +49,8 @@ public class BrowserFragment extends PadBaseFragment {
     ProgressBar pb_progress;
     @BindView(R.id.ll_line_web)
     LinearLayout mLlline;
-    @BindView(R.id.refreshLayout)
-    RefreshLayout mRefreshLayout;
+    @BindView(R.id.ib_update)
+    ImageButton mIbUpdate;
     String dataUrl = "";
     String isJump = "0";
     String token;
@@ -69,11 +69,7 @@ public class BrowserFragment extends PadBaseFragment {
     @Override
     protected void initListener() {
         EventBus.getDefault().register(this);
-        mRefreshLayout.setEnableLoadMore(false);
-        mRefreshLayout.setOnRefreshListener(refreshlayout -> {
-            webview_detail.reload();
-            refreshlayout.finishRefresh(1500/*,false*/);//传入false表示刷新失败
-        });
+        mIbUpdate.setOnClickListener(view -> webview_detail.reload());
     }
 
     @Override

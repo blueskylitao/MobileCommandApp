@@ -130,6 +130,7 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
                 mYuFragment = new BrowserFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("url", HttpUtil.checkUeUrl(url2));
+                bundle.putString("isjump", "2");
                 mYuFragment.setArguments(bundle);
                 transaction.add(R.id.container, mYuFragment, "f3");
             } else {
@@ -144,6 +145,7 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
                 mShiFragment = new BrowserFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("url", HttpUtil.checkUeUrl(url3));
+                bundle.putString("isjump", "3");
                 mShiFragment.setArguments(bundle);
                 transaction.add(R.id.container, mShiFragment, "f4");
             } else {
