@@ -8,9 +8,6 @@
                 android:left="15dp"
                 android:right="15dp"
                 android:top="15dp" />
-            <item android:name="android:shadowColor">#1a000000</item>
-            <item android:name="android:shadowDx">0</item>
-            <item android:name="android:shadowDy">0</item>
         </shape>
     </item>
 </layer-list>

@@ -35,6 +35,7 @@ import com.gongxin.mobilecommand.domain.CloseDrawerLayoutEvent;
 import com.gongxin.mobilecommand.domain.McTargetMenuItem;
 import com.gongxin.mobilecommand.domain.NavMenuLevel0Item;
 import com.gongxin.mobilecommand.domain.NavMenuLevel1Item;
+import com.gongxin.mobilecommand.domain.SubjectIdMessageEvent;
 import com.gongxin.mobilecommand.ui.dialog.MyDialogHint;
 import com.gongxin.mobilecommand.ui.fragment.BrowserFragment;
 import com.gongxin.mobilecommand.ui.fragment.DecisionAnalysisFragment;
@@ -157,11 +158,12 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
     }
 
     private void loadMenuData() {
-        showProgressDialog(getString(R.string.dialog_loading));
-        if (currentTab == R.id.ll_tab1){
-            loadMenuCategoryData(0, REQUEST_TYPE_TARGET_CATEGORY,"/command/targetTree");
-        }else if (currentTab == R.id.ll_tab2){
-            loadMenuCategoryData(0, REQUEST_TYPE_TARGET_CATEGORY,"/command/subject/subjectTree");
+        if (currentTab == R.id.ll_tab1) {
+            // showProgressDialog(getString(R.string.dialog_loading));
+            loadMenuCategoryData(0, REQUEST_TYPE_TARGET_CATEGORY, "/command/targetTree");
+        } else if (currentTab == R.id.ll_tab2) {
+            // showProgressDialog(getString(R.string.dialog_loading));
+            loadMenuCategoryData(0, REQUEST_TYPE_TARGET_CATEGORY, "/command/subject/subjectTree");
         }
     }
 
@@ -227,7 +229,7 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
     /**
      * 加载菜单栏指标分类数据
      */
-    private void loadMenuCategoryData(int parentId, int requestId,String url) {
+    private void loadMenuCategoryData(int parentId, int requestId, String url) {
 
         try {
             HttpParams httpParams = new HttpParams();
@@ -419,21 +421,26 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
 
     @Override
     public void onLevel1ItemClick(NavMenuLevel1Item item) {
-        if (currentTab == R.id.ll_tab1){
+        if (currentTab == R.id.ll_tab1) {
             McTargetMenuItem mcTargetMenuItem = new McTargetMenuItem();
             mcTargetMenuItem.setName(item.getName());
             mcTargetMenuItem.setId(item.getId());
             mcTargetSelectPopup.pushParentId(mcTargetMenuItem);
             mcTargetSelectPopupView.toggle();
-            loadMenuCategoryData(item.getId(), REQUEST_TYPE_TARGET_TARGET,"/command/targetTree");
-        }else if (currentTab == R.id.ll_tab2){
-            ToastUtil.shortToast(this,"你选择了："+item.getName()+"专题分类");
+            loadMenuCategoryData(item.getId(), REQUEST_TYPE_TARGET_TARGET, "/command/targetTree");
+        } else if (currentTab == R.id.ll_tab2) {
+            SubjectIdMessageEvent messageEvent = new SubjectIdMessageEvent();
+            messageEvent.setParentId(item.getId());
+            messageEvent.setCommonlyUsed(false);
+            EventBus.getDefault().post(messageEvent);
+            ToastUtil.shortToast(this, "你选择了：" + item.getName() + "专题分类");
+            onBackPressed();
         }
     }
 
     @Override
     public void onTargetItemClick(McTargetMenuItem item) {
-        loadMenuCategoryData(item.getId(), REQUEST_TYPE_TARGET_TARGET,"/command/targetTree");
+        loadMenuCategoryData(item.getId(), REQUEST_TYPE_TARGET_TARGET, "/command/targetTree");
     }
 
     @Override
@@ -441,7 +448,7 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
         String targetName = mNavEtSearch.getText().toString();
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
 
-            if (currentTab == R.id.ll_tab1){
+            if (currentTab == R.id.ll_tab1) {
                 KeyboardUtils.hideSoftInput(v);
 
                 if (TextUtils.isEmpty(targetName)) {
@@ -450,8 +457,8 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
                 }
                 mcTargetSelectPopupView.toggle();
                 searchTarget(targetName);
-            }else if (currentTab == R.id.ll_tab2){
-               ToastUtil.shortToast(this,"搜索："+targetName);
+            } else if (currentTab == R.id.ll_tab2) {
+                ToastUtil.shortToast(this, "搜索：" + targetName);
             }
 
             return true;
@@ -463,11 +470,16 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.nav_tv_usual) {
-            if (currentTab == R.id.ll_tab1){
+            if (currentTab == R.id.ll_tab1) {
                 mcTargetSelectPopupView.toggle();
                 loadUsualTarget();
-            }else if (currentTab == R.id.ll_tab2){
-                ToastUtil.shortToast(this,"常用专题");
+            } else if (currentTab == R.id.ll_tab2) {
+                SubjectIdMessageEvent messageEvent = new SubjectIdMessageEvent();
+                messageEvent.setParentId(0);
+                messageEvent.setCommonlyUsed(true);
+                EventBus.getDefault().post(messageEvent);
+                onBackPressed();
+                ToastUtil.shortToast(this, "常用专题");
             }
 
         } else {
