@@ -11,7 +11,7 @@ import java.util.List;
 
 
 /**
- *
+ *z专题adapter
  */
 
 public class SubjectAdapter extends BaseQuickAdapter<DecisionSubject, BaseViewHolder> {
@@ -32,7 +32,27 @@ public class SubjectAdapter extends BaseQuickAdapter<DecisionSubject, BaseViewHo
         helper.setText(R.id.tv_unit_name, item.getBuildUnit());
         helper.setText(R.id.tv_like_count, item.getApproveNum());
         helper.setText(R.id.tv_hot_count, item.getVisitNum());
+        switch (helper.getLayoutPosition() % 4) {
+            case 0:
+                helper.setImageResource(R.id.iv_logo, R.mipmap.zonghe_ic);
+                helper.setBackgroundRes(R.id.ll_logo, R.drawable.logo_item_bg);
+                break;
+            case 1:
+                helper.setImageResource(R.id.iv_logo, R.mipmap.zonghe_ic_two);
+                helper.setBackgroundRes(R.id.ll_logo, R.drawable.logo_item_bg_two);
+                break;
+            case 2:
+                helper.setImageResource(R.id.iv_logo, R.mipmap.zonghe_ic_three);
+                helper.setBackgroundRes(R.id.ll_logo, R.drawable.logo_item_bg_three);
+                break;
+            case 3:
+                helper.setImageResource(R.id.iv_logo, R.mipmap.zonghe_ic_four);
+                helper.setBackgroundRes(R.id.ll_logo, R.drawable.logo_item_bg_four);
+                break;
+            default:
+                break;
 
+        }
         helper.addOnClickListener(R.id.iv_isattention);
         helper.addOnClickListener(R.id.ll_like);
         helper.addOnClickListener(R.id.ll_hot);

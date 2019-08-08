@@ -30,7 +30,7 @@
     <string name="radiobutton1">手势</string>
     <string name="radiobutton2">指纹</string>
     <string name="radiobutton3">扫脸</string>
-    <string name="title_activity_single_home">SingleHomeActivity</string>
+    <string name="title_activity_single_home">移动指挥舱PAD</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
