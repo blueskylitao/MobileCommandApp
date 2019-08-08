@@ -117,20 +117,7 @@ public class DecisionAnalysisFragment extends PadBaseFragment {
     @Override
     protected void onHttpRequestResult(Response<String> response, int requestId) {
         super.onHttpRequestResult(response, requestId);
-        if (requestId == 1) {
-            List<DecisionSubject> dataList = JSON.parseArray(response.body(), DecisionSubject.class);
-            if (dataList.size() > 0) {
-                mlists.clear();
-                mlists.addAll(dataList);
-            } else {
-                TextView textView = new TextView(context);
-                textView.setHeight(DensityUtil.getScreenHeightByDP(context));
-                textView.setText("暂无数据");
-                textView.setGravity(Gravity.CENTER);
-                subjectAdapter.setEmptyView(textView);
-            }
-            subjectAdapter.notifyDataSetChanged();
-        } else if (requestId == 2) {
+        if (requestId == 1 || requestId == 2) {
             List<DecisionSubject> dataList = JSON.parseArray(response.body(), DecisionSubject.class);
             if (dataList.size() > 0) {
                 mlists.clear();
