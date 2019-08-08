@@ -41,6 +41,8 @@ public class DecisionAnalysisFragment extends PadBaseFragment {
     private List<DecisionSubject> mlists = new ArrayList<DecisionSubject>();
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
@@ -148,8 +150,10 @@ public class DecisionAnalysisFragment extends PadBaseFragment {
     public void Event(SubjectIdMessageEvent messageEvent) {
         int parentId = messageEvent.getParentId();
         if (messageEvent.getCommonlyUsed()) {
+            mTvTitle.setText(messageEvent.getTitle());
             getCommonlyUsedSubject(1);
         } else {
+            mTvTitle.setText(messageEvent.getTitle());
             getChildSubjectById(parentId, 2);
         }
     }

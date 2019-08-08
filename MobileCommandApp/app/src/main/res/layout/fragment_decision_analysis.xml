@@ -35,12 +35,13 @@
                     tools:ignore="MissingConstraints" />
 
                 <TextView
+                    android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="8dp"
                     android:layout_toEndOf="@+id/label_left_first"
-                    android:text="专题分类"
+                    android:text="常用专题"
                     android:textColor="#111111"
                     android:textSize="16sp" />
 
@@ -60,11 +61,7 @@
                       android:weightSum="5">
 
                       <include layout="@layout/item_child_subject_layout" />
-                      <include layout="@layout/item_child_subject_layout" />
-                      <include layout="@layout/item_child_subject_layout" />
-                      <include layout="@layout/item_child_subject_layout" />
-                      <include layout="@layout/item_child_subject_layout" />
-                      <include layout="@layout/item_child_subject_layout" />
+
                   </LinearLayout>
               </LinearLayout>-->
             <androidx.recyclerview.widget.RecyclerView

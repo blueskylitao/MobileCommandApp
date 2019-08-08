@@ -431,6 +431,7 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
         } else if (currentTab == R.id.ll_tab2) {
             SubjectIdMessageEvent messageEvent = new SubjectIdMessageEvent();
             messageEvent.setParentId(item.getId());
+            messageEvent.setTitle(item.getName());
             messageEvent.setCommonlyUsed(false);
             EventBus.getDefault().post(messageEvent);
             ToastUtil.shortToast(this, "你选择了：" + item.getName() + "专题分类");
@@ -476,6 +477,7 @@ public class SingleHomeActivity extends PadBaseActivity implements NavMenuExpand
             } else if (currentTab == R.id.ll_tab2) {
                 SubjectIdMessageEvent messageEvent = new SubjectIdMessageEvent();
                 messageEvent.setParentId(0);
+                messageEvent.setTitle("常用专题");
                 messageEvent.setCommonlyUsed(true);
                 EventBus.getDefault().post(messageEvent);
                 onBackPressed();
