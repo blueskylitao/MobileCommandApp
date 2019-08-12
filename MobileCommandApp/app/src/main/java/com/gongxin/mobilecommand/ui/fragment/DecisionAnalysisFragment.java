@@ -59,7 +59,7 @@ public class DecisionAnalysisFragment extends PadBaseFragment {
         mRvList.setAdapter(subjectAdapter);
 
         subjectAdapter.setOnItemClickListener((adapter, view, position) -> {
-            ToastUtil.showToast(context, "点击了条目");
+            ToastUtil.showToast(context, "点击了条目" + position);
         });
 
         subjectAdapter.setOnItemChildClickListener((adapter, view, position) -> {
